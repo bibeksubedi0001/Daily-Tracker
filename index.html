@@ -273,7 +273,8 @@
         #historyView { display: none; animation: fadeIn 0.3s ease; }
         .history-table { width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 20px; font-size: 13px; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
         .history-table th, .history-table td { padding: 12px 10px; text-align: left; border-bottom: 1px solid var(--border); }
-        .history-table th { background: #f8f9fa; color: var(--text); font-weight: 700; text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; }
+        .history-table th { background: #f8f9fa; color: var(--text); font-weight: 700; text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; white-space: nowrap;}
+        .history-table td { white-space: nowrap; } /* Prevent wrapping, force scroll */
         .history-table tr:last-child td { border-bottom: none; }
         .history-table tr:hover { background: #f8f9fa; }
 
@@ -396,7 +397,7 @@
                     <span class="rating-display"><span id="wakeScore">0</span> pts</span>
                 </div>
                 <div class="input-group">
-                    <label>Meditate/Ex:</label>
+                    <label>Meditation/Ex:</label>
                     <input type="number" id="meditationTime" placeholder="Minutes" oninput="calculateAll()">
                     <span class="rating-display"><span id="meditationScore">0</span> / 15</span>
                 </div>
@@ -419,21 +420,21 @@
                 <div class="section-title">Deep Work Sessions</div>
                 <!-- Session 1 -->
                 <div class="input-group">
-                    <label>Sess I (11-1):</label>
+                    <label>Session I (11-1):</label>
                     <input type="number" id="s1_time" placeholder="Mins" oninput="calculateAll()" style="width: 70px;">
                     <input type="number" id="s1_acc" placeholder="Done %" oninput="calculateAll()" style="width: 70px;">
                     <span class="rating-display"><span id="s1_score">0</span></span>
                 </div>
                 <!-- Session 2 -->
                 <div class="input-group">
-                    <label>Sess II (2-4):</label>
+                    <label>Session II (2-4):</label>
                     <input type="number" id="s2_time" placeholder="Mins" oninput="calculateAll()" style="width: 70px;">
                     <input type="number" id="s2_acc" placeholder="Done %" oninput="calculateAll()" style="width: 70px;">
                     <span class="rating-display"><span id="s2_score">0</span></span>
                 </div>
                 <!-- Session 3 -->
                 <div class="input-group">
-                    <label>Sess III (Eve):</label>
+                    <label>Session III (Eve):</label>
                     <input type="number" id="s3_time" placeholder="Mins" oninput="calculateAll()" style="width: 70px;">
                     <input type="number" id="s3_acc" placeholder="Done %" oninput="calculateAll()" style="width: 70px;">
                     <span class="rating-display"><span id="s3_score">0</span></span>
@@ -451,7 +452,7 @@
                     <span class="rating-display"><span id="dietDisp">5</span> / 10</span>
                 </div>
                 <div class="input-group">
-                    <label>Meds:</label>
+                    <label>Medicine:</label>
                     <div style="flex-grow: 1; display: flex; gap: 15px; align-items: center; flex-wrap: wrap;">
                         <label class="checkbox-wrapper" style="font-weight: normal; font-size: 13px; min-width: auto;">
                             <input type="checkbox" id="med_morning" onchange="calculateAll()"> Morning
@@ -481,7 +482,7 @@
                     <label>L Status:</label>
                     <select id="masturbationLevel" onchange="calculateAll()" style="color: var(--text); font-weight: 500;">
                         <option value="0">Clean (0)</option>
-                        <option value="5">Surfed (Success)</option>
+                        <option value="5">Urge Surfed (Success)</option>
                         <option value="-15">Slip Up (-15)</option>
                         <option value="-30">Relapse (-30)</option>
                         <option value="-50">Critical (-50)</option>
@@ -550,8 +551,8 @@
             <div class="section-title" style="justify-content: space-between;">
                 Past Logs
                 <div style="display: flex; gap: 5px;">
-                    <button class="btn" style="padding: 6px 10px; font-size: 11px; background: #e0e0e0; color: #333; width: auto; flex: unset;" onclick="clearHistory()">Clear</button>
-                    <button class="btn" style="padding: 6px 10px; font-size: 11px; background: var(--success); color: white; width: auto; flex: unset;" onclick="exportToCSV()">CSV</button>
+                    <button class="btn" style="padding: 6px 10px; font-size: 11px; background: #e0e0e0; color: #333; width: auto; flex: unset;" onclick="clearHistory()">Clear History</button>
+                    <button class="btn" style="padding: 6px 10px; font-size: 11px; background: var(--success); color: white; width: auto; flex: unset;" onclick="exportToCSV()">Export CSV</button>
                 </div>
             </div>
             
@@ -559,12 +560,12 @@
                 <table class="history-table" id="historyTable">
                     <thead>
                         <tr>
-                            <th>Time</th>
-                            <th>Wake</th>
-                            <th>Work</th>
-                            <th>Pts</th>
-                            <th>L</th>
-                            <th>Action</th>
+                            <th>Date & Time</th>
+                            <th>Wake Up</th>
+                            <th>Deep Work</th>
+                            <th>Score</th>
+                            <th>L Status</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -584,13 +585,13 @@
                     <thead>
                         <tr>
                             <th style="width: 10%;">Time</th>
-                            <th style="width: 13%;">Sun</th>
-                            <th style="width: 13%;">Mon</th>
-                            <th style="width: 13%;">Tue</th>
-                            <th style="width: 13%;">Wed</th>
-                            <th style="width: 13%;">Thu</th>
-                            <th style="width: 13%;">Fri</th>
-                            <th style="width: 12%;">Sat</th>
+                            <th style="width: 13%;">Sunday</th>
+                            <th style="width: 13%;">Monday</th>
+                            <th style="width: 13%;">Tuesday</th>
+                            <th style="width: 13%;">Wednesday</th>
+                            <th style="width: 13%;">Thursday</th>
+                            <th style="width: 13%;">Friday</th>
+                            <th style="width: 12%;">Saturday</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -991,8 +992,8 @@
             const mVal = parseInt(data.inputs.masturbationLevel || 0);
             let mText = "Clean";
             let mColor = "#00b894";
-            if(mVal < 0) { mText = mVal; mColor = "#d63031"; }
-            else if(mVal === 5) { mText = "Surf"; mColor = "#0984e3"; }
+            if(mVal < 0) { mText = mVal + " (Slip)"; mColor = "#d63031"; }
+            else if(mVal === 5) { mText = "Urge Surfed"; mColor = "#0984e3"; }
 
             const d1 = parseFloat(data.inputs.s1_time || 0);
             const d2 = parseFloat(data.inputs.s2_time || 0);
@@ -1001,7 +1002,7 @@
 
             const wake = data.inputs.wakeTime || "-";
             const dateObj = new Date(data.date);
-            const shortDate = dateObj.getDate() + "/" + (dateObj.getMonth()+1);
+            const shortDate = dateObj.toLocaleDateString();
 
             tr.innerHTML = `
                 <td style="font-weight:600; font-size:11px;">${shortDate}</td>
@@ -1011,8 +1012,8 @@
                 <td style="color:${mColor}; font-weight:600; font-size:11px;">${mText}</td>
                 <td>
                     <div style="display:flex; gap:5px;">
-                        <button style="cursor:pointer; background:transparent; color:#3498db; border:1px solid #3498db; padding:4px 6px; border-radius:4px; font-size:10px;" onclick="loadRecord('${id}')">Load</button>
-                        <button style="cursor:pointer; background:transparent; color:#d63031; border:1px solid #d63031; padding:4px 6px; border-radius:4px; font-size:10px;" onclick="deleteRecord('${id}')">X</button>
+                        <button style="cursor:pointer; background:transparent; color:#3498db; border:1px solid #3498db; padding:6px 10px; border-radius:4px; font-size:11px;" type="button" onclick="loadRecord('${id}')">Load Log</button>
+                        <button style="cursor:pointer; background:transparent; color:#d63031; border:1px solid #d63031; padding:6px 10px; border-radius:4px; font-size:11px;" type="button" onclick="deleteRecord('${id}')">Delete</button>
                     </div>
                 </td>
             `;
