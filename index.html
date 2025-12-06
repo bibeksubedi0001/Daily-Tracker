@@ -483,15 +483,15 @@
 
             <!-- HABIT CONTROL -->
             <div class="tracker-section" style="border-left: 4px solid var(--danger);">
-                <div class="section-title" style="color: var(--danger);">Control Protocol</div>
+                <div class="section-title" style="color: var(--danger);">Energy Management</div>
                 <div class="input-group">
-                    <label>L Status:</label>
+                    <label>Exhaustion:</label>
                     <select id="masturbationLevel" onchange="calculateAll()" style="color: var(--text); font-weight: 500;">
-                        <option value="0">Clean (0)</option>
-                        <option value="5">Urge Surfed (Success)</option>
-                        <option value="-15">Slip Up (-15)</option>
-                        <option value="-30">Relapse (-30)</option>
-                        <option value="-50">Critical (-50)</option>
+                        <option value="0">Fresh / High Energy (0)</option>
+                        <option value="5">Refocused / Controlled (+5)</option>
+                        <option value="-15">Drained / Distracted (-15)</option>
+                        <option value="-30">Exhausted (-30)</option>
+                        <option value="-50">Burnout / Crash (-50)</option>
                     </select>
                     <span class="rating-display" style="color: var(--danger); background: #fff5f5;"><span id="habitScore">0</span></span>
                 </div>
@@ -570,7 +570,7 @@
                             <th>Wake Up</th>
                             <th>Deep Work</th>
                             <th>Score</th>
-                            <th>L Status</th>
+                            <th>Energy State</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -996,10 +996,10 @@
             const tr = document.createElement('tr');
             
             const mVal = parseInt(data.inputs.masturbationLevel || 0);
-            let mText = "Clean";
+            let mText = "Fresh";
             let mColor = "#00b894";
-            if(mVal < 0) { mText = mVal + " (Slip)"; mColor = "#d63031"; }
-            else if(mVal === 5) { mText = "Urge Surfed"; mColor = "#0984e3"; }
+            if(mVal < 0) { mText = "Drained (" + mVal + ")"; mColor = "#d63031"; }
+            else if(mVal === 5) { mText = "Refocused"; mColor = "#0984e3"; }
 
             const d1 = parseFloat(data.inputs.s1_time || 0);
             const d2 = parseFloat(data.inputs.s2_time || 0);
@@ -1085,7 +1085,7 @@
         if (registry.length === 0) { alert("No data."); return; }
         
         let csvContent = "data:text/csv;charset=utf-8,";
-        csvContent += "Date,Time,WakeTime,DeepWorkMinutes,ScreenTime,L_Penalty,MedicineMorning,MedicineNight,TotalScore,ImprovementNote\n";
+        csvContent += "Date,Time,WakeTime,DeepWorkMinutes,ScreenTime,Exhaustion_Penalty,MedicineMorning,MedicineNight,TotalScore,ImprovementNote\n";
 
         registry.forEach(id => {
             const d = JSON.parse(localStorage.getItem(id));
