@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- Viewport set for perfect mobile scaling (iPhone Notch compatible) -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    
+    <!-- iOS Web App Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Bibek Tracker">
+    <link rel="apple-touch-icon" href="https://img.icons8.com/color/180/000000/bullish.png">
+
+    <title>Bibek's Master Routine & Tracker</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Poppins:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --primary-light: #34495e;
+            --accent: #3498db;
+            --accent-glow: rgba(52, 152, 219, 0.3);
+            --success: #00b894;
+            --danger: #d63031;
+            --warning: #fdcb6e;
+            --bg: #f0f2f5;
+            --paper: #ffffff;
+            --border: #dfe6e9;
+            --text: #2d3436;
+            --text-light: #636e72;
+            --radius: 12px;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+            padding-top: env(safe-area-inset-top);
+            padding-bottom: env(safe-area-inset-bottom);
+            padding-left: env(safe-area-inset-left);
+            padding-right: env(safe-area-inset-right);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: var(--paper);
+            padding: 20px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 40px;
+        }
+
+        /* Header Styling */
+        header {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            margin: -20px -20px 20px -20px;
+            padding: 30px 20px;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        h1 { 
+            margin: 0; 
+            font-family: 'Poppins', sans-serif; 
+            font-size: 22px; 
+            letter-spacing: 0.5px; 
+            font-weight: 700; 
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h2 { margin: 2px 0 0; font-size: 12px; opacity: 0.9; font-weight: 400; letter-spacing: 1px; }
+
+        .time-panel { text-align: right; flex-grow: 1; }
+        
+        /* Modern Tabs */
+        .tabs { 
+            display: flex; 
+            gap: 10px; 
+            margin-bottom: 20px; 
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border); 
+            overflow-x: auto; 
+            -webkit-overflow-scrolling: touch; 
+        }
+        .tab-btn {
+            padding: 10px 18px;
+            background: transparent;
+            border: none;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-light);
+            cursor: pointer;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+            white-space: nowrap;
+        }
+        .tab-btn:hover { background-color: rgba(52, 152, 219, 0.1); color: var(--accent); }
+        .tab-btn.active { 
+            background-color: var(--accent); 
+            color: white; 
+            box-shadow: 0 4px 12px var(--accent-glow);
+        }
+
+        /* Badge */
+        .now-badge {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1em;
+            display: inline-block;
+            margin-top: 5px;
+            text-align: center;
+            text-transform: uppercase;
+            font-family: 'Poppins', sans-serif;
+            letter-spacing: 0.5px;
+            transition: all 0.5s ease;
+        }
+
+        /* Sections */
+        .tracker-section {
+            border: 1px solid var(--border);
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: var(--radius);
+            background: #fff;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .section-title {
+            color: var(--primary);
+            font-family: 'Poppins', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            letter-spacing: 1.2px;
+            display: flex;
+            align-items: center;
+        }
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+            margin-left: 15px;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        label { 
+            font-weight: 600; 
+            font-size: 14px; 
+            min-width: 120px; 
+            color: var(--text);
+            flex-shrink: 0;
+        }
+        
+        input[type="text"], input[type="number"], input[type="time"], select, textarea {
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-family: inherit;
+            background: #f8f9fa;
+            transition: all 0.2s;
+            font-size: 16px; /* Prevents zoom on iOS */
+            width: 100%;
+        }
+        
+        @media (min-width: 600px) {
+            input[type="text"], textarea { flex-grow: 1; width: auto; }
+            input[type="number"], input[type="time"], select { width: auto; }
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: white;
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+        textarea { resize: vertical; height: 60px; }
+
+        input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--accent);
+            cursor: pointer;
+            vertical-align: middle;
+        }
+
+        .rating-display {
+            font-weight: 700;
+            color: var(--accent);
+            margin-left: auto;
+            background: #eef2f7;
+            padding: 6px 12px;
+            border-radius: 6px;
+            min-width: 60px;
+            text-align: center;
+            font-size: 13px;
+        }
+
+        /* Dashboard */
+        .score-dashboard {
+            background: var(--primary);
+            background: linear-gradient(to right, #2c3e50, #4ca1af);
+            color: white;
+            padding: 20px;
+            border-radius: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+            position: sticky;
+            bottom: 20px;
+            box-shadow: 0 10px 25px rgba(44, 62, 80, 0.4);
+            z-index: 100;
+            backdrop-filter: blur(5px);
+        }
+        .score-val { font-size: 28px; font-weight: 800; font-family: 'Poppins', sans-serif; line-height: 1; }
+        .score-label { font-size: 11px; text-transform: uppercase; opacity: 0.8; letter-spacing: 1px; }
+
+        /* Actions */
+        .action-bar { display: flex; gap: 10px; margin-top: 20px; }
+        .btn {
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            text-transform: uppercase;
+            flex: 1;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            font-family: 'Poppins', sans-serif;
+            -webkit-appearance: none;
+            appearance: none; /* FIXED: Added standard property */
+        }
+        .btn:active { transform: scale(0.98); }
+        .btn-save { background: var(--success); color: white; box-shadow: 0 4px 15px rgba(0, 184, 148, 0.3); }
+        .btn-clear { background: white; color: var(--danger); border: 1px solid var(--danger); }
+        .btn-save:hover { background: #00a884; transform: translateY(-2px); }
+        .btn-clear:hover { background: #fff5f5; }
+
+        /* Tables */
+        #historyView { display: none; animation: fadeIn 0.3s ease; }
+        .history-table { width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 20px; font-size: 13px; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+        .history-table th, .history-table td { padding: 12px 10px; text-align: left; border-bottom: 1px solid var(--border); }
+        .history-table th { background: #f8f9fa; color: var(--text); font-weight: 700; text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; }
+        .history-table tr:last-child td { border-bottom: none; }
+        .history-table tr:hover { background: #f8f9fa; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .routine-container { overflow-x: auto; margin-top: 10px; border-radius: 8px; border: 1px solid var(--border); -webkit-overflow-scrolling: touch; }
+        .routine-table { width: 100%; border-collapse: collapse; min-width: 800px; font-size: 12px; }
+        .routine-table th, .routine-table td { border: 1px solid #eee; padding: 10px 5px; text-align: center; vertical-align: middle; }
+        .routine-table th { background-color: var(--primary); color: white; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
+        
+        /* Subject Color Coding - RESTORED ORIGINAL */
+        .sub-elec2 { background-color: #fff9c4; color: #f57f17; font-weight: bold; border-left: 3px solid #fbc02d; } 
+        .sub-elec3 { background-color: #f3e5f5; color: #7b1fa2; font-weight: bold; border-left: 3px solid #9c27b0; } 
+        .sub-comp { background-color: #e0f2f1; color: #00897b; font-weight: bold; border-left: 3px solid #00897b; } 
+        .sub-const { background-color: #dcedc8; color: #689f38; font-weight: bold; border-left: 3px solid #689f38; } 
+        .sub-tech { background-color: #e0f7fa; color: #00acc1; font-weight: bold; border-left: 3px solid #00acc1; } 
+        .sub-prof { background-color: #fce4ec; color: #d81b60; font-weight: bold; border-left: 3px solid #d81b60; } 
+        .sub-break { background-color: #f5f5f5; color: #aaa; font-style: italic; letter-spacing: 1px; }
+
+        /* Other Activities - RESTORED ORIGINAL */
+        .act-morning { background-color: #e8f8f5; color: #2c3e50; font-style: italic; }
+        .act-deep { background-color: #e3f2fd; color: #1565c0; font-weight: bold; } 
+        .act-hec { background-color: #d6eaf8; color: #2980b9; font-weight: bold; border-left: 3px solid #3498db; } 
+        .act-gym { background-color: #e8f5e9; color: #2e7d32; font-weight: bold; }
+        .act-sat { background-color: #fff3e0; color: #e65100; font-weight: bold; }
+        .act-python { background-color: #34495e; color: #f1c40f; font-weight: bold; }
+        .act-relax { background-color: #d1c4e9; color: #512da8; font-weight: bold; }
+        .act-night { background-color: #2c3e50; color: #ecf0f1; }
+
+        .tag-loc { display: block; font-size: 0.8em; color: inherit; margin-top: 4px; text-transform: uppercase; opacity: 0.8; }
+
+        /* Range Input Styling - FIXED */
+        input[type=range] { 
+            -webkit-appearance: none; 
+            appearance: none; 
+            width: 100%; 
+            background: transparent; 
+            padding: 0; 
+            border: none; 
+        }
+        input[type=range]::-webkit-slider-thumb { 
+            -webkit-appearance: none; 
+            appearance: none;
+            height: 24px; 
+            width: 24px; 
+            border-radius: 50%; 
+            background: var(--accent); 
+            margin-top: -10px; 
+            cursor: pointer; 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2); 
+        }
+        input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 4px; cursor: pointer; background: #dfe6e9; border-radius: 2px; }
+        
+        .checkbox-wrapper { display: flex; align-items: center; gap: 10px; padding: 5px; }
+
+        /* DEBUG CONSOLE FOR MOBILE */
+        #debugConsole {
+            display: none;
+            background: #333;
+            color: #f88;
+            padding: 10px;
+            margin-top: 20px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 12px;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div>
+            <h1>Master Routine</h1>
+            <h2>Bibek Subedi | Solo Protocol</h2>
+        </div>
+        <div class="time-panel">
+            <div id="clockDisplay" style="font-size: 1.8em; font-weight: 700; font-family: 'Poppins'; margin-bottom: 5px;">00:00</div>
+            <div id="currentDateDisplay" style="font-size: 0.8em; opacity: 0.8; font-weight: 500;">Date</div>
+            <div id="currentActivityBadge" class="now-badge">Sync...</div>
+        </div>
+    </header>
+
+    <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('tracker')">Daily Tracker</button>
+        <button class="tab-btn" onclick="switchTab('history')">History</button>
+        <button class="tab-btn" onclick="switchTab('routine')">Routine</button>
+    </div>
+
+    <!-- Error Display Area -->
+    <div id="debugConsole"></div>
+
+    <!-- TRACKER TAB -->
+    <div id="trackerView" style="animation: fadeIn 0.4s ease;">
+        <form id="trackerForm">
+            <!-- GOALS -->
+            <div class="tracker-section">
+                <div class="section-title">Focus of the Day</div>
+                <div class="input-group">
+                    <label>1. Thesis:</label>
+                    <input type="text" id="goal1" placeholder="Main priority...">
+                </div>
+                <div class="input-group">
+                    <label>2. Skill Up:</label>
+                    <input type="text" id="goal2" placeholder="Python/Hec-Ras...">
+                </div>
+                <div class="input-group">
+                    <label>3. Academics:</label>
+                    <input type="text" id="goal3" placeholder="Subject study...">
+                </div>
+            </div>
+
+            <!-- MORNING -->
+            <div class="tracker-section">
+                <div class="section-title">Morning Protocol</div>
+                <div class="input-group">
+                    <label>Wake Up:</label>
+                    <input type="time" id="wakeTime" onchange="calculateAll()">
+                    <span class="rating-display"><span id="wakeScore">0</span> pts</span>
+                </div>
+                <div class="input-group">
+                    <label>Meditate/Ex:</label>
+                    <input type="number" id="meditationTime" placeholder="Minutes" oninput="calculateAll()">
+                    <span class="rating-display"><span id="meditationScore">0</span> / 15</span>
+                </div>
+                <div class="input-group">
+                    <label>Breakfast:</label>
+                    <select id="breakfastRating" onchange="calculateAll()">
+                        <option value="5">Excellent (5)</option>
+                        <option value="4">Good (4)</option>
+                        <option value="3">Average (3)</option>
+                        <option value="2">Poor (2)</option>
+                        <option value="1">Skipped (1)</option>
+                        <option value="0">None (0)</option>
+                    </select>
+                    <span class="rating-display"><span id="breakfastScore">0</span> / 5</span>
+                </div>
+            </div>
+
+            <!-- STUDY SESSIONS -->
+            <div class="tracker-section">
+                <div class="section-title">Deep Work Sessions</div>
+                <!-- Session 1 -->
+                <div class="input-group">
+                    <label>Sess I (11-1):</label>
+                    <input type="number" id="s1_time" placeholder="Mins" oninput="calculateAll()" style="width: 70px;">
+                    <input type="number" id="s1_acc" placeholder="Done %" oninput="calculateAll()" style="width: 70px;">
+                    <span class="rating-display"><span id="s1_score">0</span></span>
+                </div>
+                <!-- Session 2 -->
+                <div class="input-group">
+                    <label>Sess II (2-4):</label>
+                    <input type="number" id="s2_time" placeholder="Mins" oninput="calculateAll()" style="width: 70px;">
+                    <input type="number" id="s2_acc" placeholder="Done %" oninput="calculateAll()" style="width: 70px;">
+                    <span class="rating-display"><span id="s2_score">0</span></span>
+                </div>
+                <!-- Session 3 -->
+                <div class="input-group">
+                    <label>Sess III (Eve):</label>
+                    <input type="number" id="s3_time" placeholder="Mins" oninput="calculateAll()" style="width: 70px;">
+                    <input type="number" id="s3_acc" placeholder="Done %" oninput="calculateAll()" style="width: 70px;">
+                    <span class="rating-display"><span id="s3_score">0</span></span>
+                </div>
+            </div>
+
+            <!-- LIFESTYLE & HABITS -->
+            <div class="tracker-section">
+                <div class="section-title">Lifestyle & Habits</div>
+                <div class="input-group">
+                    <label>Diet:</label>
+                    <div style="flex-grow: 1; padding: 0 10px;">
+                        <input type="range" id="dietScoreInput" min="0" max="10" value="5" oninput="document.getElementById('dietDisp').innerText = this.value; calculateAll()">
+                    </div>
+                    <span class="rating-display"><span id="dietDisp">5</span> / 10</span>
+                </div>
+                <div class="input-group">
+                    <label>Meds:</label>
+                    <div style="flex-grow: 1; display: flex; gap: 15px; align-items: center; flex-wrap: wrap;">
+                        <label class="checkbox-wrapper" style="font-weight: normal; font-size: 13px; min-width: auto;">
+                            <input type="checkbox" id="med_morning" onchange="calculateAll()"> Morning
+                        </label>
+                        <label class="checkbox-wrapper" style="font-weight: normal; font-size: 13px; min-width: auto;">
+                            <input type="checkbox" id="med_night" onchange="calculateAll()"> Night
+                        </label>
+                    </div>
+                    <span class="rating-display" style="color: var(--success);">+<span id="medScore">0</span></span>
+                </div>
+                <div class="input-group">
+                    <label>Screen Time:</label>
+                    <input type="number" id="screenHours" step="0.1" placeholder="Hours" oninput="calculateAll()">
+                    <span class="rating-display"><span id="screenScore">25</span> / 25</span>
+                </div>
+                <div class="input-group">
+                    <label>Research:</label>
+                    <input type="number" id="researchN" placeholder="Items" oninput="calculateAll()">
+                    <span class="rating-display" style="color: var(--success);">+<span id="researchScore">0</span></span>
+                </div>
+            </div>
+
+            <!-- HABIT CONTROL -->
+            <div class="tracker-section" style="border-left: 4px solid var(--danger);">
+                <div class="section-title" style="color: var(--danger);">Control Protocol</div>
+                <div class="input-group">
+                    <label>L Status:</label>
+                    <select id="masturbationLevel" onchange="calculateAll()" style="color: var(--text); font-weight: 500;">
+                        <option value="0">Clean (0)</option>
+                        <option value="5">Surfed (Success)</option>
+                        <option value="-15">Slip Up (-15)</option>
+                        <option value="-30">Relapse (-30)</option>
+                        <option value="-50">Critical (-50)</option>
+                    </select>
+                    <span class="rating-display" style="color: var(--danger); background: #fff5f5;"><span id="habitScore">0</span></span>
+                </div>
+                <div class="input-group">
+                    <label>Rules:</label>
+                    <div style="flex-grow: 1; display: flex; gap: 15px; flex-wrap: wrap;">
+                        <label class="checkbox-wrapper" style="font-weight: normal; font-size: 13px; min-width: auto;">
+                            <input type="checkbox" id="rule_bed" onchange="calculateAll()"> No Bed
+                        </label>
+                        <label class="checkbox-wrapper" style="font-weight: normal; font-size: 13px; min-width: auto;">
+                            <input type="checkbox" id="rule_room" onchange="calculateAll()"> Out till 5
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLEEP -->
+            <div class="tracker-section">
+                <div class="section-title">Sleep Hygiene</div>
+                <div class="input-group">
+                    <label>In Bed By:</label>
+                    <input type="time" id="bedTime" onchange="calculateAll()">
+                    <span class="rating-display"><span id="sleepScore">0</span> / 15</span>
+                </div>
+            </div>
+
+            <!-- REFLECTION -->
+            <div class="tracker-section">
+                <div class="section-title">Reflection</div>
+                <div class="input-group">
+                    <label>Wins:</label>
+                    <textarea id="perfFactors" placeholder="What went well?"></textarea>
+                </div>
+                <div class="input-group">
+                    <label>Fixes:</label>
+                    <textarea id="improvement" placeholder="What to fix?"></textarea>
+                </div>
+            </div>
+
+            <!-- DASHBOARD -->
+            <div class="score-dashboard">
+                <div class="score-item">
+                    <div class="score-label">Rating</div>
+                    <div class="score-val" id="totalScore">0</div>
+                </div>
+                <div class="score-item" style="text-align: right;">
+                    <div class="score-label">Status</div>
+                    <div class="score-val" id="statusText" style="font-size: 20px;">--</div>
+                </div>
+            </div>
+
+            <!-- SAVE -->
+            <div class="action-bar">
+                <button type="button" class="btn btn-save" onclick="saveData()">Save Log</button>
+                <button type="button" class="btn btn-clear" onclick="resetForm()">Reset</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- HISTORY TAB -->
+    <div id="historyView">
+        <div class="tracker-section">
+            <div class="section-title" style="justify-content: space-between;">
+                Past Logs
+                <div style="display: flex; gap: 5px;">
+                    <button class="btn" style="padding: 6px 10px; font-size: 11px; background: #e0e0e0; color: #333; width: auto; flex: unset;" onclick="clearHistory()">Clear</button>
+                    <button class="btn" style="padding: 6px 10px; font-size: 11px; background: var(--success); color: white; width: auto; flex: unset;" onclick="exportToCSV()">CSV</button>
+                </div>
+            </div>
+            
+            <div style="overflow-x: auto;">
+                <table class="history-table" id="historyTable">
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>Wake</th>
+                            <th>Work</th>
+                            <th>Pts</th>
+                            <th>L</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- JS will populate -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- ROUTINE TAB -->
+    <div id="routineView" style="display:none; animation: fadeIn 0.4s ease;">
+        <div class="tracker-section">
+            <div class="section-title">Master Routine (2081)</div>
+            <div class="routine-container">
+                <table class="routine-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 10%;">Time</th>
+                            <th style="width: 13%;">Sun</th>
+                            <th style="width: 13%;">Mon</th>
+                            <th style="width: 13%;">Tue</th>
+                            <th style="width: 13%;">Wed</th>
+                            <th style="width: 13%;">Thu</th>
+                            <th style="width: 13%;">Fri</th>
+                            <th style="width: 12%;">Sat</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- 06:00 - 07:00 -->
+                        <tr>
+                            <td><strong>06:00</strong></td>
+                            <td colspan="6" class="act-morning">Morning Protocol<br>Wake • Hydrate • Cold Shower</td>
+                            <td class="act-sat">Hike Prep</td>
+                        </tr>
+                        <!-- 07:00 - 07:15 -->
+                        <tr>
+                            <td><strong>07:00</strong></td>
+                            <td colspan="6" class="act-morning">Commute</td>
+                            <td rowspan="4" class="act-sat">HIKING / SPORT<br>(07:00-11:00)</td>
+                        </tr>
+                        <!-- 7:15 - 8:45 -->
+                        <tr>
+                            <td><strong>07:15</strong></td>
+                            <td class="sub-elec3">GIS</td>
+                            <td class="sub-elec2">Ground Water</td>
+                            <td class="sub-elec3">GIS</td>
+                            <td class="sub-elec2">Ground Water</td>
+                            <td class="sub-elec3">GIS</td>
+                            <td class="sub-elec2">Ground Water</td>
+                        </tr>
+                        <!-- 8:45 - 10:15 -->
+                        <tr>
+                            <td><strong>08:45</strong></td>
+                            <td class="sub-comp">Comp Tech</td>
+                            <td class="sub-comp">Comp Tech</td>
+                            <td class="sub-const">Const Mgmt</td>
+                            <td class="sub-tech">Tech Env</td>
+                            <td class="sub-prof">Engg Prof</td>
+                            <td class="sub-comp">Comp Tech</td>
+                        </tr>
+                        <!-- 10:15 - 11:00 -->
+                        <tr>
+                            <td><strong>10:15</strong></td>
+                            <td colspan="6" class="sub-break">BREAK</td>
+                            <td class="act-sat">Rest</td>
+                        </tr>
+                        <!-- 11:00 - 12:30 -->
+                        <tr>
+                            <td><strong>11:00</strong><br><span style="color:var(--danger); font-weight:bold;">DEEP I</span></td>
+                            <td class="act-deep">LIT REVIEW</td>
+                            <td class="act-deep">PLAXIS</td>
+                            <td class="act-deep">LIT REVIEW</td>
+                            <td class="act-deep">PLAXIS</td>
+                            <td class="sub-const">Const Mgmt</td>
+                            <td class="sub-const">Const Mgmt</td>
+                            <td class="act-sat">Cafe</td>
+                        </tr>
+                        <!-- 12:30 - 13:30 -->
+                        <tr>
+                            <td><strong>12:30</strong></td>
+                            <td colspan="7" style="background:#eee; font-weight:bold;">LUNCH</td>
+                        </tr>
+                        <!-- 13:30 - 14:30 -->
+                        <tr>
+                            <td><strong>01:30</strong></td>
+                            <td colspan="6" class="act-hec">HEC-RAS</td>
+                            <td class="act-sat">Social</td>
+                        </tr>
+                        <!-- 14:30 - 16:30 -->
+                        <tr>
+                            <td><strong>02:30</strong><br><span style="color:#2c3e50; font-weight:bold;">SKILL</span></td>
+                            <td class="act-deep">ArcGIS</td>
+                            <td class="act-deep">Assign</td>
+                            <td class="act-deep">ArcGIS</td>
+                            <td class="act-deep">Assign</td>
+                            <td class="act-deep">MHM Res</td>
+                            <td class="act-deep">MHM Res</td>
+                            <td class="act-sat">Free</td>
+                        </tr>
+                        <!-- 16:30 - 17:30 -->
+                        <tr>
+                            <td><strong>04:30</strong></td>
+                            <td colspan="6" class="act-gym">Commute</td>
+                            <td class="act-sat">Free</td>
+                        </tr>
+                        <!-- 17:30 - 19:00 -->
+                        <tr>
+                            <td><strong>05:30</strong></td>
+                            <td colspan="7" class="act-gym">GYM / SPORT</td>
+                        </tr>
+                        <!-- 19:00 - 20:00 -->
+                        <tr>
+                            <td><strong>07:00</strong></td>
+                            <td colspan="7" class="act-morning">Dinner</td>
+                        </tr>
+                        <!-- 20:00 - 21:00 -->
+                        <tr>
+                            <td><strong>08:00</strong></td>
+                            <td class="act-python">Pandas</td>
+                            <td class="act-python">ML Reg</td>
+                            <td class="act-python">GeoPd</td>
+                            <td class="act-python">ML Class</td>
+                            <td class="act-python">Script</td>
+                            <td class="act-python">Theory</td>
+                            <td class="act-relax">Project</td>
+                        </tr>
+                        <!-- 21:00 - 21:30 -->
+                        <tr>
+                            <td><strong>09:00</strong></td>
+                            <td colspan="7" class="act-relax">RELAX</td>
+                        </tr>
+                        <!-- 21:30 -->
+                        <tr>
+                            <td><strong>09:30</strong></td>
+                            <td colspan="7" class="act-night">Sunset</td>
+                        </tr>
+                        <!-- 22:00 -->
+                        <tr>
+                            <td><strong>10:00</strong></td>
+                            <td colspan="7" style="background:#000; color:white; font-weight:bold;">SLEEP</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // GLOBAL ERROR HANDLER FOR MOBILE DEBUGGING
+    window.onerror = function(msg, url, line) {
+        const consoleDiv = document.getElementById('debugConsole');
+        consoleDiv.style.display = 'block';
+        consoleDiv.innerText += `Error: ${msg}\nLine: ${line}\n`;
+        return false;
+    };
+
+    // --- 1. INITIALIZATION ---
+    const INDEX_KEY = 'tracker_registry_v2'; 
+    const OLD_INDEX_KEY = 'tracker_dates';
+    const todayKey = new Date().toISOString().split('T')[0]; 
+    document.getElementById('currentDateDisplay').innerText = new Date().toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+
+    window.onload = function() {
+        try {
+            migrateData(); 
+            loadHistoryTable();
+            updateCurrentActivity();
+            setInterval(updateCurrentActivity, 1000); 
+
+            const registry = JSON.parse(localStorage.getItem(INDEX_KEY) || "[]");
+            const todayRecords = registry.filter(id => {
+                const item = localStorage.getItem(id);
+                if(!item) return false;
+                const data = JSON.parse(item);
+                return data && data.date === todayKey;
+            });
+            
+            if (todayRecords.length > 0) {
+                const lastId = todayRecords[todayRecords.length - 1];
+                populateForm(JSON.parse(localStorage.getItem(lastId)));
+            }
+        } catch (e) {
+            document.getElementById('debugConsole').style.display = 'block';
+            document.getElementById('debugConsole').innerText = "Load Error: " + e.message + "\n(iOS files/private mode often blocks storage)";
+        }
+    };
+
+    function migrateData() {
+        if(!window.localStorage) return;
+        const oldDates = JSON.parse(localStorage.getItem(OLD_INDEX_KEY) || "[]");
+        let registry = JSON.parse(localStorage.getItem(INDEX_KEY) || "[]");
+        let changed = false;
+
+        oldDates.forEach(date => {
+            const oldKey = 'tracker_' + date;
+            if(localStorage.getItem(oldKey) && !registry.includes(oldKey)) {
+                registry.push(oldKey);
+                changed = true;
+            }
+        });
+
+        if(changed) localStorage.setItem(INDEX_KEY, JSON.stringify(registry));
+    }
+
+    function switchTab(tabName) {
+        document.getElementById('trackerView').style.display = 'none';
+        document.getElementById('historyView').style.display = 'none';
+        document.getElementById('routineView').style.display = 'none';
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+
+        const target = document.getElementById(tabName + 'View');
+        target.style.display = 'block';
+        target.style.animation = 'none';
+        target.offsetHeight; /* trigger reflow */
+        target.style.animation = 'fadeIn 0.4s ease';
+        
+        event.target.classList.add('active');
+    }
+
+    function calculateAll() {
+        let total = 0;
+
+        // Wake
+        const wakeTime = document.getElementById('wakeTime').value;
+        if(wakeTime) {
+            const [h, m] = wakeTime.split(':').map(Number);
+            const dec = h + m/60;
+            if(dec < 6) total += 15;
+            else if(dec < 7) total += 9; 
+            else if(dec < 8) total += 6;
+            else if(dec < 9) total += 0;
+            else total += -6;
+            document.getElementById('wakeScore').innerText = (total).toFixed(0);
+        }
+
+        // Meditation
+        const medTime = parseFloat(document.getElementById('meditationTime').value) || 0;
+        let medScore = (medTime / 20) * 15;
+        if(medScore > 15) medScore = 15;
+        document.getElementById('meditationScore').innerText = Math.round(medScore);
+        total += medScore;
+
+        // Breakfast
+        total += parseInt(document.getElementById('breakfastRating').value);
+        document.getElementById('breakfastScore').innerText = document.getElementById('breakfastRating').value;
+
+        // Sessions
+        function calcSession(timeId, accId, outputId) {
+            const T = parseFloat(document.getElementById(timeId).value) || 0;
+            const A = parseFloat(document.getElementById(accId).value) || 0;
+            let score = (0.48 * (T / 120) + 0.52 * (A / 100)) * 30;
+            if(score > 30) score = 30;
+            document.getElementById(outputId).innerText = Math.round(score);
+            return score;
+        }
+        total += calcSession('s1_time', 's1_acc', 's1_score');
+        total += calcSession('s2_time', 's2_acc', 's2_score');
+        total += calcSession('s3_time', 's3_acc', 's3_score');
+
+        // Diet
+        total += parseInt(document.getElementById('dietScoreInput').value);
+        
+        // Meds
+        let medPoints = 0;
+        if(document.getElementById('med_morning').checked) medPoints += 5;
+        if(document.getElementById('med_night').checked) medPoints += 5;
+        document.getElementById('medScore').innerText = medPoints;
+        total += medPoints;
+
+        // Screen
+        const sHours = parseFloat(document.getElementById('screenHours').value) || 0;
+        let screenScore = 25 - (1.6 * Math.pow(sHours, 1.6));
+        if(screenScore < -20) screenScore = -20;
+        document.getElementById('screenScore').innerText = Math.round(screenScore);
+        total += screenScore;
+
+        // Research
+        const N = parseFloat(document.getElementById('researchN').value) || 0;
+        let rScore = 0.0833 * Math.pow(N,3) - 1.1429 * Math.pow(N,2) + 8.9881 * N;
+        document.getElementById('researchScore').innerText = Math.round(rScore);
+        total += rScore;
+
+        // Habit
+        let habitScore = parseInt(document.getElementById('masturbationLevel').value);
+        if(document.getElementById('rule_bed').checked) habitScore += 5;
+        if(document.getElementById('rule_room').checked) habitScore += 5;
+        document.getElementById('habitScore').innerText = habitScore;
+        total += habitScore;
+
+        // Sleep
+        const bedTime = document.getElementById('bedTime').value;
+        let sleepScore = 0;
+        if(bedTime) {
+            const [h, m] = bedTime.split(':').map(Number);
+            let timeVal = h + m/60;
+            if (h < 6) timeVal += 24;
+
+            if (timeVal < 22.08) sleepScore = 15;
+            else if (timeVal < 23) sleepScore = 9;
+            else if (timeVal < 24) sleepScore = 0;
+            else {
+                let hoursPast = timeVal - 24;
+                sleepScore = -4 * hoursPast;
+            }
+        }
+        document.getElementById('sleepScore').innerText = Math.round(sleepScore);
+        total += sleepScore;
+
+        // Final
+        total = Math.round(total);
+        document.getElementById('totalScore').innerText = total;
+
+        const statusEl = document.getElementById('statusText');
+        if (total >= 95) { statusEl.innerText = "GOD MODE"; statusEl.style.color = "#a55eea"; }
+        else if (total >= 85) { statusEl.innerText = "LEGENDARY"; statusEl.style.color = "#00b894"; }
+        else if (total >= 70) { statusEl.innerText = "GOOD"; statusEl.style.color = "#0984e3"; }
+        else if (total >= 50) { statusEl.innerText = "SURVIVING"; statusEl.style.color = "#fdcb6e"; }
+        else { statusEl.innerText = "CRITICAL"; statusEl.style.color = "#d63031"; }
+    }
+
+    function saveData() {
+        try {
+            const timestamp = new Date().getTime();
+            const recordId = 'tracker_' + todayKey + '_' + timestamp;
+            const now = new Date();
+            const shortTime = now.getHours() + ":" + (now.getMinutes()<10?'0':'') + now.getMinutes();
+
+            const data = {
+                id: recordId,
+                date: todayKey,
+                timestamp: todayKey + " " + shortTime, 
+                goals: [
+                    document.getElementById('goal1').value,
+                    document.getElementById('goal2').value,
+                    document.getElementById('goal3').value
+                ],
+                inputs: {
+                    wakeTime: document.getElementById('wakeTime').value,
+                    meditationTime: document.getElementById('meditationTime').value,
+                    breakfastRating: document.getElementById('breakfastRating').value,
+                    s1_time: document.getElementById('s1_time').value,
+                    s1_acc: document.getElementById('s1_acc').value,
+                    s2_time: document.getElementById('s2_time').value,
+                    s2_acc: document.getElementById('s2_acc').value,
+                    s3_time: document.getElementById('s3_time').value,
+                    s3_acc: document.getElementById('s3_acc').value,
+                    dietScoreInput: document.getElementById('dietScoreInput').value,
+                    med_morning: document.getElementById('med_morning').checked,
+                    med_night: document.getElementById('med_night').checked,
+                    screenHours: document.getElementById('screenHours').value,
+                    researchN: document.getElementById('researchN').value,
+                    masturbationLevel: document.getElementById('masturbationLevel').value,
+                    bedTime: document.getElementById('bedTime').value,
+                    rule_bed: document.getElementById('rule_bed').checked,
+                    rule_room: document.getElementById('rule_room').checked,
+                    perfFactors: document.getElementById('perfFactors').value,
+                    improvement: document.getElementById('improvement').value
+                },
+                totalScore: document.getElementById('totalScore').innerText
+            };
+
+            localStorage.setItem(recordId, JSON.stringify(data));
+            
+            let registry = JSON.parse(localStorage.getItem(INDEX_KEY) || "[]");
+            registry.push(recordId);
+            localStorage.setItem(INDEX_KEY, JSON.stringify(registry));
+
+            alert("Saved!");
+            loadHistoryTable();
+        } catch(e) {
+            alert("Save failed! If on iOS file, local storage is blocked. Try using GitHub Pages.");
+        }
+    }
+
+    function resetForm() {
+        if(confirm("Clear form?")) {
+            document.querySelectorAll('input').forEach(i => {
+                if(i.type === 'checkbox') i.checked = false;
+                else if(i.type === 'range') i.value = 5;
+                else i.value = "";
+            });
+            document.querySelectorAll('select').forEach(s => s.selectedIndex = 0);
+            document.querySelectorAll('textarea').forEach(t => t.value = "");
+            document.querySelectorAll('.rating-display span').forEach(s => s.innerText = '0');
+            calculateAll();
+        }
+    }
+
+    function populateForm(data) {
+        if(!data) return;
+        if(data.goals) {
+            document.getElementById('goal1').value = data.goals[0] || "";
+            document.getElementById('goal2').value = data.goals[1] || "";
+            document.getElementById('goal3').value = data.goals[2] || "";
+        }
+        if(data.inputs) {
+            for(const key in data.inputs) {
+                const el = document.getElementById(key);
+                if(el) {
+                    if(el.type === 'checkbox') el.checked = data.inputs[key];
+                    else el.value = data.inputs[key];
+                }
+            }
+        }
+        calculateAll();
+    }
+
+    function loadHistoryTable() {
+        const tbody = document.querySelector('#historyTable tbody');
+        tbody.innerHTML = "";
+        
+        let registry = JSON.parse(localStorage.getItem(INDEX_KEY) || "[]");
+        const reversedRegistry = [...registry].reverse();
+
+        reversedRegistry.forEach(id => {
+            const dataStr = localStorage.getItem(id);
+            if(!dataStr) return;
+            const data = JSON.parse(dataStr);
+            const tr = document.createElement('tr');
+            
+            const mVal = parseInt(data.inputs.masturbationLevel || 0);
+            let mText = "Clean";
+            let mColor = "#00b894";
+            if(mVal < 0) { mText = mVal; mColor = "#d63031"; }
+            else if(mVal === 5) { mText = "Surf"; mColor = "#0984e3"; }
+
+            const d1 = parseFloat(data.inputs.s1_time || 0);
+            const d2 = parseFloat(data.inputs.s2_time || 0);
+            const d3 = parseFloat(data.inputs.s3_time || 0);
+            const totalWork = ((d1 + d2 + d3) / 60).toFixed(1);
+
+            const wake = data.inputs.wakeTime || "-";
+            const dateObj = new Date(data.date);
+            const shortDate = dateObj.getDate() + "/" + (dateObj.getMonth()+1);
+
+            tr.innerHTML = `
+                <td style="font-weight:600; font-size:11px;">${shortDate}</td>
+                <td>${wake}</td>
+                <td>${totalWork}h</td>
+                <td style="font-weight:800; color: #2c3e50;">${data.totalScore}</td>
+                <td style="color:${mColor}; font-weight:600; font-size:11px;">${mText}</td>
+                <td>
+                    <div style="display:flex; gap:5px;">
+                        <button style="cursor:pointer; background:transparent; color:#3498db; border:1px solid #3498db; padding:4px 6px; border-radius:4px; font-size:10px;" onclick="loadRecord('${id}')">Load</button>
+                        <button style="cursor:pointer; background:transparent; color:#d63031; border:1px solid #d63031; padding:4px 6px; border-radius:4px; font-size:10px;" onclick="deleteRecord('${id}')">X</button>
+                    </div>
+                </td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
+
+    function updateCurrentActivity() {
+        const now = new Date();
+        const day = now.getDay(); 
+        const hour = now.getHours();
+        const min = now.getMinutes();
+        const timeVal = hour + min/60;
+
+        document.getElementById('clockDisplay').innerText = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+
+        let status = "FREE TIME";
+        let color = "#b2bec3";
+        let bg = "rgba(178, 190, 195, 0.2)";
+
+        if (timeVal >= 22 || timeVal < 6) {
+            status = "SLEEP WARNING!";
+            color = "#d63031"; 
+            bg = "rgba(214, 48, 49, 0.2)";
+        }
+        else if (day === 6) { 
+            if (timeVal >= 6 && timeVal < 7) { status = "HIKE PREP"; color = "#e67e22"; }
+            else if (timeVal >= 7 && timeVal < 11) { status = "HIKING"; color = "#d35400"; }
+            else if (timeVal >= 11 && timeVal < 14) { status = "REVIEW"; color = "#f39c12"; }
+            else if (timeVal >= 14) { status = "SOCIAL"; color = "#00b894"; }
+            if(color !== "#d63031") bg = color + "33"; 
+        } 
+        else {
+            if (timeVal >= 6 && timeVal < 7) { status = "MORNING"; color = "#00b894"; }
+            else if (timeVal >= 7 && timeVal < 7.25) { status = "COMMUTE"; color = "#636e72"; }
+            else if (timeVal >= 7.25 && timeVal < 8.75) { status = "ACADEMICS"; color = "#a55eea"; }
+            else if (timeVal >= 8.75 && timeVal < 10.25) { status = "LECTURES"; color = "#0984e3"; }
+            else if (timeVal >= 10.25 && timeVal < 11) { status = "BREAK"; color = "#fdcb6e"; }
+            else if (timeVal >= 11 && timeVal < 12.5) { status = "DEEP WORK I"; color = "#e17055"; }
+            else if (timeVal >= 12.5 && timeVal < 13.5) { status = "LUNCH"; color = "#00b894"; }
+            else if (timeVal >= 13.5 && timeVal < 14.5) { status = "HEC-RAS"; color = "#0984e3"; }
+            else if (timeVal >= 14.5 && timeVal < 16.5) { status = "SKILL"; color = "#2d3436"; }
+            else if (timeVal >= 16.5 && timeVal < 17.5) { status = "COMMUTE"; color = "#636e72"; }
+            else if (timeVal >= 17.5 && timeVal < 19) { status = "GYM / SPORT"; color = "#00b894"; }
+            else if (timeVal >= 19 && timeVal < 20) { status = "DINNER"; color = "#e67e22"; }
+            else if (timeVal >= 20 && timeVal < 21) { status = "PYTHON / ML"; color = "#f1c40f"; }
+            else if (timeVal >= 21 && timeVal < 21.5) { status = "RELAX"; color = "#2d3436"; }
+            else if (timeVal >= 21.5 && timeVal < 22) { status = "SUNSET"; color = "#2d3436"; }
+            
+            if(color !== "#d63031" && color.startsWith("#")) bg = color + "33"; 
+        }
+
+        const badge = document.getElementById('currentActivityBadge');
+        badge.innerText = status;
+        badge.style.backgroundColor = "rgba(255,255,255,0.15)";
+        badge.style.color = "#fff";
+        badge.style.border = `1px solid ${color}`;
+        badge.style.textShadow = `0 0 5px ${color}`;
+    }
+
+    function exportToCSV() {
+        let registry = JSON.parse(localStorage.getItem(INDEX_KEY) || "[]");
+        if (registry.length === 0) { alert("No data."); return; }
+        
+        let csvContent = "data:text/csv;charset=utf-8,";
+        csvContent += "Date,Time,WakeTime,DeepWorkMinutes,ScreenTime,L_Penalty,MedicineMorning,MedicineNight,TotalScore,ImprovementNote\n";
+
+        registry.forEach(id => {
+            const d = JSON.parse(localStorage.getItem(id));
+            if(d && d.inputs) {
+                let work = (parseFloat(d.inputs.s1_time)||0) + (parseFloat(d.inputs.s2_time)||0) + (parseFloat(d.inputs.s3_time)||0);
+                let note = (d.inputs.improvement || "").replace(/,/g, " ");
+                let time = d.timestamp ? d.timestamp.replace(',', '') : '00:00:00';
+                let row = `${d.date},${time},${d.inputs.wakeTime},${work},${d.inputs.screenHours},${d.inputs.masturbationLevel},${d.inputs.med_morning},${d.inputs.med_night},${d.totalScore},${note}`;
+                csvContent += row + "\r\n";
+            }
+        });
+
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", "bibek_tracker_data.csv");
+        document.body.appendChild(link);
+        link.click();
+    }
+
+    window.loadRecord = function(id) {
+        if(confirm("Load log?")) {
+            const data = JSON.parse(localStorage.getItem(id));
+            populateForm(data);
+            switchTab('tracker');
+        }
+    }
+    
+    window.deleteRecord = function(id) {
+        if(confirm("Delete this log?")) {
+            localStorage.removeItem(id);
+            let registry = JSON.parse(localStorage.getItem(INDEX_KEY) || "[]");
+            registry = registry.filter(item => item !== id);
+            localStorage.setItem(INDEX_KEY, JSON.stringify(registry));
+            loadHistoryTable();
+        }
+    }
+
+    window.clearHistory = function() {
+        if(confirm("Delete ALL history?")) {
+            localStorage.clear();
+            location.reload();
+        }
+    }
+</script>
+
+</body>
+</html>
