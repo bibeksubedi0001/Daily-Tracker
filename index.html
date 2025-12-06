@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <!-- Viewport set for perfect mobile scaling (iPhone Notch compatible) -->
+    <!-- Viewport optimized for iPhone Notch and touch interactions -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     
     <!-- iOS Web App Meta Tags -->
@@ -49,6 +49,8 @@
             padding-right: env(safe-area-inset-right);
             line-height: 1.6;
             min-height: 100vh;
+            /* Force cursor pointer to ensure iOS recognizes clicks everywhere */
+            cursor: pointer; 
         }
 
         .container {
@@ -110,6 +112,8 @@
             transition: all 0.3s ease;
             font-family: 'Poppins', sans-serif;
             white-space: nowrap;
+            /* iOS Fix: Improves tap response */
+            touch-action: manipulation;
         }
         .tab-btn:hover { background-color: rgba(52, 152, 219, 0.1); color: var(--accent); }
         .tab-btn.active { 
@@ -261,7 +265,9 @@
             transition: transform 0.2s, box-shadow 0.2s;
             font-family: 'Poppins', sans-serif;
             -webkit-appearance: none;
-            appearance: none; /* FIXED: Added standard property */
+            appearance: none;
+            /* iOS Fix */
+            touch-action: manipulation;
         }
         .btn:active { transform: scale(0.98); }
         .btn-save { background: var(--success); color: white; box-shadow: 0 4px 15px rgba(0, 184, 148, 0.3); }
@@ -285,7 +291,7 @@
         .routine-table th, .routine-table td { border: 1px solid #eee; padding: 10px 5px; text-align: center; vertical-align: middle; }
         .routine-table th { background-color: var(--primary); color: white; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
         
-        /* Subject Color Coding - RESTORED ORIGINAL */
+        /* Subject Color Coding */
         .sub-elec2 { background-color: #fff9c4; color: #f57f17; font-weight: bold; border-left: 3px solid #fbc02d; } 
         .sub-elec3 { background-color: #f3e5f5; color: #7b1fa2; font-weight: bold; border-left: 3px solid #9c27b0; } 
         .sub-comp { background-color: #e0f2f1; color: #00897b; font-weight: bold; border-left: 3px solid #00897b; } 
@@ -294,7 +300,7 @@
         .sub-prof { background-color: #fce4ec; color: #d81b60; font-weight: bold; border-left: 3px solid #d81b60; } 
         .sub-break { background-color: #f5f5f5; color: #aaa; font-style: italic; letter-spacing: 1px; }
 
-        /* Other Activities - RESTORED ORIGINAL */
+        /* Other Activities */
         .act-morning { background-color: #e8f8f5; color: #2c3e50; font-style: italic; }
         .act-deep { background-color: #e3f2fd; color: #1565c0; font-weight: bold; } 
         .act-hec { background-color: #d6eaf8; color: #2980b9; font-weight: bold; border-left: 3px solid #3498db; } 
@@ -306,7 +312,7 @@
 
         .tag-loc { display: block; font-size: 0.8em; color: inherit; margin-top: 4px; text-transform: uppercase; opacity: 0.8; }
 
-        /* Range Input Styling - FIXED */
+        /* Range Input Styling */
         input[type=range] { 
             -webkit-appearance: none; 
             appearance: none; 
@@ -360,9 +366,9 @@
     </header>
 
     <div class="tabs">
-        <button class="tab-btn active" onclick="switchTab('tracker')">Daily Tracker</button>
-        <button class="tab-btn" onclick="switchTab('history')">History</button>
-        <button class="tab-btn" onclick="switchTab('routine')">Routine</button>
+        <button class="tab-btn active" onclick="switchTab('tracker')" type="button">Daily Tracker</button>
+        <button class="tab-btn" onclick="switchTab('history')" type="button">History</button>
+        <button class="tab-btn" onclick="switchTab('routine')" type="button">Routine</button>
     </div>
 
     <!-- Error Display Area -->
@@ -551,8 +557,8 @@
             <div class="section-title" style="justify-content: space-between;">
                 Past Logs
                 <div style="display: flex; gap: 5px;">
-                    <button class="btn" style="padding: 6px 10px; font-size: 11px; background: #e0e0e0; color: #333; width: auto; flex: unset;" onclick="clearHistory()">Clear History</button>
-                    <button class="btn" style="padding: 6px 10px; font-size: 11px; background: var(--success); color: white; width: auto; flex: unset;" onclick="exportToCSV()">Export CSV</button>
+                    <button class="btn" style="padding: 6px 10px; font-size: 11px; background: #e0e0e0; color: #333; width: auto; flex: unset;" type="button" onclick="clearHistory()">Clear History</button>
+                    <button class="btn" style="padding: 6px 10px; font-size: 11px; background: var(--success); color: white; width: auto; flex: unset;" type="button" onclick="exportToCSV()">Export CSV</button>
                 </div>
             </div>
             
@@ -597,115 +603,115 @@
                     <tbody>
                         <!-- 06:00 - 07:00 -->
                         <tr>
-                            <td><strong>06:00</strong></td>
+                            <td><strong>06:00 - 07:00</strong></td>
                             <td colspan="6" class="act-morning">Morning Protocol<br>Wake • Hydrate • Cold Shower</td>
                             <td class="act-sat">Hike Prep</td>
                         </tr>
                         <!-- 07:00 - 07:15 -->
                         <tr>
-                            <td><strong>07:00</strong></td>
-                            <td colspan="6" class="act-morning">Commute</td>
+                            <td><strong>07:00 - 07:15</strong></td>
+                            <td colspan="6" class="act-morning">Commute (Podcast)</td>
                             <td rowspan="4" class="act-sat">HIKING / SPORT<br>(07:00-11:00)</td>
                         </tr>
                         <!-- 7:15 - 8:45 -->
                         <tr>
-                            <td><strong>07:15</strong></td>
-                            <td class="sub-elec3">GIS</td>
-                            <td class="sub-elec2">Ground Water</td>
-                            <td class="sub-elec3">GIS</td>
-                            <td class="sub-elec2">Ground Water</td>
-                            <td class="sub-elec3">GIS</td>
-                            <td class="sub-elec2">Ground Water</td>
+                            <td><strong>07:15 - 08:45</strong></td>
+                            <td class="sub-elec3">GIS & Remote Sensing</td>
+                            <td class="sub-elec2">Ground Water Engineering</td>
+                            <td class="sub-elec3">GIS & Remote Sensing</td>
+                            <td class="sub-elec2">Ground Water Engineering</td>
+                            <td class="sub-elec3">GIS & Remote Sensing</td>
+                            <td class="sub-elec2">Ground Water Engineering</td>
                         </tr>
                         <!-- 8:45 - 10:15 -->
                         <tr>
-                            <td><strong>08:45</strong></td>
-                            <td class="sub-comp">Comp Tech</td>
-                            <td class="sub-comp">Comp Tech</td>
-                            <td class="sub-const">Const Mgmt</td>
-                            <td class="sub-tech">Tech Env</td>
-                            <td class="sub-prof">Engg Prof</td>
-                            <td class="sub-comp">Comp Tech</td>
+                            <td><strong>08:45 - 10:15</strong></td>
+                            <td class="sub-comp">Computer Technology</td>
+                            <td class="sub-comp">Computer Technology</td>
+                            <td class="sub-const">Construction Management</td>
+                            <td class="sub-tech">Technology Environment</td>
+                            <td class="sub-prof">Engineering Professional Practice</td>
+                            <td class="sub-comp">Computer Technology</td>
                         </tr>
                         <!-- 10:15 - 11:00 -->
                         <tr>
-                            <td><strong>10:15</strong></td>
-                            <td colspan="6" class="sub-break">BREAK</td>
+                            <td><strong>10:15 - 11:00</strong></td>
+                            <td colspan="6" class="sub-break">BREAK / SOCIALIZE</td>
                             <td class="act-sat">Rest</td>
                         </tr>
                         <!-- 11:00 - 12:30 -->
                         <tr>
-                            <td><strong>11:00</strong><br><span style="color:var(--danger); font-weight:bold;">DEEP I</span></td>
-                            <td class="act-deep">LIT REVIEW</td>
-                            <td class="act-deep">PLAXIS</td>
-                            <td class="act-deep">LIT REVIEW</td>
-                            <td class="act-deep">PLAXIS</td>
-                            <td class="sub-const">Const Mgmt</td>
-                            <td class="sub-const">Const Mgmt</td>
-                            <td class="act-sat">Cafe</td>
+                            <td><strong>11:00 - 12:30</strong><br><span style="color:var(--danger); font-weight:bold;">DEEP I</span></td>
+                            <td class="act-deep">LITERATURE REVIEW</td>
+                            <td class="act-deep">PLAXIS MODELING</td>
+                            <td class="act-deep">LITERATURE REVIEW</td>
+                            <td class="act-deep">PLAXIS MODELING</td>
+                            <td class="sub-const">Construction Management</td>
+                            <td class="sub-const">Construction Management</td>
+                            <td class="act-sat">Cafe Review</td>
                         </tr>
                         <!-- 12:30 - 13:30 -->
                         <tr>
-                            <td><strong>12:30</strong></td>
-                            <td colspan="7" style="background:#eee; font-weight:bold;">LUNCH</td>
+                            <td><strong>12:30 - 01:30</strong></td>
+                            <td colspan="7" style="background:#eee; font-weight:bold;">LUNCH (On Campus)</td>
                         </tr>
                         <!-- 13:30 - 14:30 -->
                         <tr>
-                            <td><strong>01:30</strong></td>
-                            <td colspan="6" class="act-hec">HEC-RAS</td>
+                            <td><strong>01:30 - 02:30</strong></td>
+                            <td colspan="6" class="act-hec">HEC-RAS HOUR</td>
                             <td class="act-sat">Social</td>
                         </tr>
                         <!-- 14:30 - 16:30 -->
                         <tr>
-                            <td><strong>02:30</strong><br><span style="color:#2c3e50; font-weight:bold;">SKILL</span></td>
+                            <td><strong>02:30 - 04:30</strong><br><span style="color:#2c3e50; font-weight:bold;">SKILL</span></td>
                             <td class="act-deep">ArcGIS</td>
-                            <td class="act-deep">Assign</td>
+                            <td class="act-deep">Assignments</td>
                             <td class="act-deep">ArcGIS</td>
-                            <td class="act-deep">Assign</td>
-                            <td class="act-deep">MHM Res</td>
-                            <td class="act-deep">MHM Res</td>
+                            <td class="act-deep">Assignments</td>
+                            <td class="act-deep">MHM Research</td>
+                            <td class="act-deep">MHM Research</td>
                             <td class="act-sat">Free</td>
                         </tr>
                         <!-- 16:30 - 17:30 -->
                         <tr>
-                            <td><strong>04:30</strong></td>
-                            <td colspan="6" class="act-gym">Commute</td>
+                            <td><strong>04:30 - 05:30</strong></td>
+                            <td colspan="6" class="act-gym">Commute / Podcast</td>
                             <td class="act-sat">Free</td>
                         </tr>
                         <!-- 17:30 - 19:00 -->
                         <tr>
-                            <td><strong>05:30</strong></td>
+                            <td><strong>05:30 - 07:00</strong></td>
                             <td colspan="7" class="act-gym">GYM / SPORT</td>
                         </tr>
                         <!-- 19:00 - 20:00 -->
                         <tr>
-                            <td><strong>07:00</strong></td>
+                            <td><strong>07:00 - 08:00</strong></td>
                             <td colspan="7" class="act-morning">Dinner</td>
                         </tr>
                         <!-- 20:00 - 21:00 -->
                         <tr>
-                            <td><strong>08:00</strong></td>
+                            <td><strong>08:00 - 09:00</strong></td>
                             <td class="act-python">Pandas</td>
-                            <td class="act-python">ML Reg</td>
-                            <td class="act-python">GeoPd</td>
-                            <td class="act-python">ML Class</td>
-                            <td class="act-python">Script</td>
+                            <td class="act-python">ML Regression</td>
+                            <td class="act-python">GeoPandas</td>
+                            <td class="act-python">ML Classification</td>
+                            <td class="act-python">Python Scripts</td>
                             <td class="act-python">Theory</td>
                             <td class="act-relax">Project</td>
                         </tr>
                         <!-- 21:00 - 21:30 -->
                         <tr>
-                            <td><strong>09:00</strong></td>
-                            <td colspan="7" class="act-relax">RELAX</td>
+                            <td><strong>09:00 - 09:30</strong></td>
+                            <td colspan="7" class="act-relax">RELAX / SCREEN FEED</td>
                         </tr>
                         <!-- 21:30 -->
                         <tr>
-                            <td><strong>09:30</strong></td>
-                            <td colspan="7" class="act-night">Sunset</td>
+                            <td><strong>09:30 - 10:00</strong></td>
+                            <td colspan="7" class="act-night">Digital Sunset</td>
                         </tr>
                         <!-- 22:00 -->
                         <tr>
-                            <td><strong>10:00</strong></td>
+                            <td><strong>10:00 -></strong></td>
                             <td colspan="7" style="background:#000; color:white; font-weight:bold;">SLEEP</td>
                         </tr>
                     </tbody>
@@ -1012,8 +1018,8 @@
                 <td style="color:${mColor}; font-weight:600; font-size:11px;">${mText}</td>
                 <td>
                     <div style="display:flex; gap:5px;">
-                        <button style="cursor:pointer; background:transparent; color:#3498db; border:1px solid #3498db; padding:6px 10px; border-radius:4px; font-size:11px;" type="button" onclick="loadRecord('${id}')">Load Log</button>
-                        <button style="cursor:pointer; background:transparent; color:#d63031; border:1px solid #d63031; padding:6px 10px; border-radius:4px; font-size:11px;" type="button" onclick="deleteRecord('${id}')">Delete</button>
+                        <button style="cursor:pointer; background:transparent; color:#3498db; border:1px solid #3498db; padding:8px 12px; border-radius:4px; font-size:12px; touch-action: manipulation;" type="button" onclick="loadRecord('${id}')">Load</button>
+                        <button style="cursor:pointer; background:transparent; color:#d63031; border:1px solid #d63031; padding:8px 12px; border-radius:4px; font-size:12px; font-weight:bold; touch-action: manipulation;" type="button" onclick="deleteRecord('${id}')">Delete</button>
                     </div>
                 </td>
             `;
