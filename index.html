@@ -711,14 +711,14 @@
             </div>
 
             <div class="tracker-section" style="border-left: 4px solid var(--danger);">
-                <div class="section-title" style="color: var(--danger);">Fresh Mode Protocal</div>
+                <div class="section-title" style="color: var(--danger);">Fresh Mode Protocol</div>
                 <div class="input-group">
                     <label>Status:</label>
                     <select id="maturitylevel" onchange="calculateAll()" style="color: var(--text); font-weight: 500;">
-                        <option value="10">Super Cool (+10)</option>
-                        <option value="0">Retained after Bad (+0)</option>
-                        <option value="-10">Bad (-10)</option>
-                        <option value="-20">Very Bad (-20)</option>
+                        <option value="10">🔥Super Cool (+10)</option>
+                        <option value="0">😐Retained after Bad (+0)</option>
+                        <option value="-10">😫Bad (-10)</option>
+                        <option value="-20">😤Very Bad (-20)</option>
                     </select>
                     <span class="rating-display" style="color: var(--danger); background: var(--bg); border-color: var(--danger);"><span id="habitScore">0</span></span>
                 </div>
@@ -750,16 +750,6 @@
                     <label>Flow State:</label>
                     <input type="range" id="flowState" min="1" max="10" value="5" oninput="document.getElementById('flowDisp').innerText = this.value;" style="width:100%">
                     <span class="rating-display">🌊 <span id="flowDisp">5</span></span>
-                </div>
-                <div class="input-group">
-                    <label>Mood:</label>
-                    <select id="moodSelect">
-                        <option value="🔥">🔥 Fired Up</option>
-                        <option value="🙂">🙂 Good</option>
-                        <option value="😐">😐 Neutral</option>
-                        <option value="😫">😫 Tired</option>
-                        <option value="😤">😤 Frustrated</option>
-                    </select>
                 </div>
                 <div class="input-group">
                     <label style="color: var(--success);">🏆 Top Win:</label>
