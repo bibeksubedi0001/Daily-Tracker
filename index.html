@@ -711,14 +711,14 @@
             </div>
 
             <div class="tracker-section" style="border-left: 4px solid var(--danger);">
-                <div class="section-title" style="color: var(--danger);">🛡️ Monk Mode Protocol</div>
+                <div class="section-title" style="color: var(--danger);">Fresh Mode Protocal</div>
                 <div class="input-group">
                     <label>Retention Status:</label>
-                    <select id="masturbationLevel" onchange="calculateAll()" style="color: var(--text); font-weight: 500;">
-                        <option value="0">Clean (0)</option>
-                        <option value="5">Urge Surfed (+5)</option>
-                        <option value="-15">Slip Up (-15)</option>
-                        <option value="-30">Relapse (-30)</option>
+                    <select id="maturitylevel" onchange="calculateAll()" style="color: var(--text); font-weight: 500;">
+                        <option value="10">Super Cool (+10)</option>
+                        <option value="5">Retained after Bad (+0)</option>
+                        <option value="-5">Bad (-10)</option>
+                        <option value="-20">Very Bad (-20)</option>
                     </select>
                     <span class="rating-display" style="color: var(--danger); background: var(--bg); border-color: var(--danger);"><span id="habitScore">0</span></span>
                 </div>
@@ -1363,7 +1363,7 @@
 
             agg.diet += (parseInt(d.inputs.dietScoreInput||5) / 10);
             agg.focus += (parseInt(d.inputs.flowState||5) / 10);
-            agg.disc += (parseInt(d.inputs.masturbationLevel) >= 0 ? 1 : 0.4); 
+            agg.disc += (parseInt(d.inputs.maturitylevel) >= 0 ? 1 : 0.4); 
         });
 
         const count = dataList.length;
@@ -1680,7 +1680,7 @@
         let rScore = 0.0833 * Math.pow(N,3) - 1.1429 * Math.pow(N,2) + 8.9881 * N;
         document.getElementById('researchScore').innerText = Math.round(rScore);
         total += rScore;
-        let habitScore = parseInt(document.getElementById('masturbationLevel').value);
+        let habitScore = parseInt(document.getElementById('maturitylevel').value);
         if(document.getElementById('rule_bed').checked) habitScore += 5;
         if(document.getElementById('rule_room').checked) habitScore += 5;
         document.getElementById('habitScore').innerText = habitScore;
@@ -1736,7 +1736,7 @@
                 med_morning: document.getElementById('med_morning').checked,
                 screenHours: document.getElementById('screenHours').value,
                 researchN: document.getElementById('researchN').value,
-                masturbationLevel: document.getElementById('masturbationLevel').value,
+                maturitylevel: document.getElementById('maturitylevel').value,
                 bedTime: document.getElementById('bedTime').value,
                 rule_bed: document.getElementById('rule_bed').checked,
                 rule_room: document.getElementById('rule_room').checked,
@@ -2051,7 +2051,7 @@
                 let time = d.timestamp ? d.timestamp.replace(',', '') : '00:00:00';
                 let tags = (d.inputs.dayTags || "").replace(/,/g, " ");
                 let obstacle = (d.inputs.mainObstacle || "").replace(/,/g, " ");
-                let row = `${d.date},${time},${d.inputs.wakeTime},${work},${d.inputs.screenHours},${d.inputs.masturbationLevel},${d.inputs.waterIntake || 0},${d.inputs.energyLevel || 0},${d.inputs.flowState || 0},${d.inputs.moodSelect || '-'},${d.totalScore},"${d.inputs.topWin || ''}","${obstacle}","${tags}"`;
+                let row = `${d.date},${time},${d.inputs.wakeTime},${work},${d.inputs.screenHours},${d.inputs.maturitylevel},${d.inputs.waterIntake || 0},${d.inputs.energyLevel || 0},${d.inputs.flowState || 0},${d.inputs.moodSelect || '-'},${d.totalScore},"${d.inputs.topWin || ''}","${obstacle}","${tags}"`;
                 csvContent += row + "\r\n";
             }
         });
@@ -2104,7 +2104,7 @@
                     <td>${d.inputs.wakeTime || '-'}</td>
                     <td>${work}</td>
                     <td>${d.inputs.screenHours}</td>
-                    <td>${d.inputs.masturbationLevel}</td>
+                    <td>${d.inputs.maturitylevel}</td>
                     <td>${d.inputs.waterIntake || 0}</td>
                     <td>${d.inputs.energyLevel || 0}</td>
                     <td>${d.inputs.flowState || 0}</td>
