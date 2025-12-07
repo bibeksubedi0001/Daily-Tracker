@@ -581,13 +581,6 @@
                 <div class="section-title" style="color: #a55eea;">🏗️ Grand Strategy</div>
                 <div style="margin-bottom: 15px;">
                     <div style="display: flex; justify-content: space-between; font-size: 12px; font-weight: 700; margin-bottom: 5px;">
-                        <span>Thesis: Site Response Analysis</span>
-                        <span id="thesisPercent">0%</span>
-                    </div>
-                    <input type="range" id="thesisProgress" min="0" max="100" value="0" oninput="updateLongTerm('thesis', this.value)" style="width:100%">
-                </div>
-                <div>
-                    <div style="display: flex; justify-content: space-between; font-size: 12px; font-weight: 700; margin-bottom: 5px;">
                         <span>HEC-RAS 100-Day Challenge</span>
                         <span id="hecPercent">Day 0</span>
                     </div>
@@ -653,19 +646,19 @@
             <div class="tracker-section">
                 <div class="section-title">🧠 Deep Work Sessions</div>
                 <div class="input-group">
-                    <label style="color:var(--accent);">Thesis (PLAXIS):</label>
+                    <label style="color:var(--accent);">Session I(Skill/Literature):</label>
                     <input type="number" id="s1_time" placeholder="Mins (Target 120)" oninput="calculateAll()" style="width: 100px;">
                     <input type="number" id="s1_acc" placeholder="Done %" oninput="calculateAll()" style="width: 100px;">
                     <span class="rating-display"><span id="s1_score">0</span> / 30</span>
                 </div>
                 <div class="input-group">
-                    <label>Session II (Skill):</label>
+                    <label>Session II (Skill Devlopment):</label>
                     <input type="number" id="s2_time" placeholder="Mins (Target 120)" oninput="calculateAll()" style="width: 100px;">
                     <input type="number" id="s2_acc" placeholder="Done %" oninput="calculateAll()" style="width: 100px;">
                     <span class="rating-display"><span id="s2_score">0</span> / 30</span>
                 </div>
                 <div class="input-group">
-                    <label>Session III (Eve):</label>
+                    <label>Session III (Python/ML):</label>
                     <input type="number" id="s3_time" placeholder="Mins (Target 90)" oninput="calculateAll()" style="width: 100px;">
                     <input type="number" id="s3_acc" placeholder="Done %" oninput="calculateAll()" style="width: 100px;">
                     <span class="rating-display"><span id="s3_score">0</span> / 30</span>
@@ -747,11 +740,6 @@
                     <input type="text" id="dayTags" placeholder="#Sick #Exam #Productive">
                 </div>
                 <div class="input-group">
-                    <label>Flow State:</label>
-                    <input type="range" id="flowState" min="1" max="10" value="5" oninput="document.getElementById('flowDisp').innerText = this.value;" style="width:100%">
-                    <span class="rating-display">🌊 <span id="flowDisp">5</span></span>
-                </div>
-                <div class="input-group">
                     <label style="color: var(--success);">🏆 Top Win:</label>
                     <input type="text" id="topWin" placeholder="Accomplishment...">
                 </div>
@@ -804,8 +792,8 @@
                     <div class="timer-status-text" id="timerStatus">Ready to Engage</div>
                 </div>
                 <select id="timerTarget" class="focus-target-select">
-                    <option value="s1_time">🎯 Session I: Thesis/Plaxis</option>
-                    <option value="s2_time">🛠️ Session II: Skill Dev</option>
+                    <option value="s1_time">🎯 Session I: Literature Reviews</option>
+                    <option value="s2_time">🛠️ Session II: Skill Development</option>
                     <option value="s3_time">🐍 Session III: Python/ML</option>
                 </select>
                 <div class="focus-controls">
@@ -940,22 +928,22 @@
 
                         <tr id="row-07-b">
                             <td>07:15 - 08:45</td>
-                            <td><div class="rt-card bg-lecture"><div class="rt-title">GIS & RS</div></div></td>
-                            <td><div class="rt-card bg-lecture"><div class="rt-title">Ground Water</div></div></td>
-                            <td><div class="rt-card bg-lecture"><div class="rt-title">GIS & RS</div></div></td>
-                            <td><div class="rt-card bg-lecture"><div class="rt-title">Ground Water</div></div></td>
-                            <td><div class="rt-card bg-lecture"><div class="rt-title">GIS & RS</div></div></td>
-                            <td><div class="rt-card bg-lecture"><div class="rt-title">Ground Water</div></div></td>
+                            <td><div class="rt-card bg-lecture"><div class="rt-title">GIS & Remote Sensing</div></div></td>
+                            <td><div class="rt-card bg-lecture"><div class="rt-title">GroundWater Engineering</div></div></td>
+                            <td><div class="rt-card bg-lecture"><div class="rt-title">GIS & Remote Sensing</div></div></td>
+                            <td><div class="rt-card bg-lecture"><div class="rt-title">GroundWater Engineering</div></div></td>
+                            <td><div class="rt-card bg-lecture"><div class="rt-title">GIS & Remote Sensing</div></div></td>
+                            <td><div class="rt-card bg-lecture"><div class="rt-title">GroundWater Engineering</div></div></td>
                         </tr>
                         <!-- 08:45 -->
                         <tr id="row-08">
                             <td>08:45 - 10:15</td>
-                            <td><div class="rt-card bg-lecture"><div class="rt-title">Comp Tech</div></div></td>
-                            <td><div class="rt-card bg-lecture"><div class="rt-title">Comp Tech</div></div></td>
-                            <td><div class="rt-card bg-lecture"><div class="rt-title">Const Mgmt</div></div></td>
-                            <td><div class="rt-card bg-lecture"><div class="rt-title">Tech Env</div></div></td>
-                            <td><div class="rt-card bg-lecture"><div class="rt-title">Engg Prof</div></div></td>
-                            <td><div class="rt-card bg-lecture"><div class="rt-title">Comp Tech</div></div></td>
+                            <td><div class="rt-card bg-lecture"><div class="rt-title">Computational Technique</div><div class="rt-sub">RKR</div></div></td>
+                            <td><div class="rt-card bg-lecture"><div class="rt-title">Computational Technique </div><div class="rt-sub">SKSah</div></div></td>
+                            <td><div class="rt-card bg-lecture"><div class="rt-title">Construction Management</div></div></td>
+                            <td><div class="rt-card bg-lecture"><div class="rt-title">Tech. Env. & Society</div></div></td>
+                            <td><div class="rt-card bg-lecture"><div class="rt-title">Engg. Prof. Practice</div></div></td>
+                            <td><div class="rt-card bg-lecture"><div class="rt-title">Computational Technique </div><div class="rt-sub">SKSah</div></div></td>
                         </tr>
                         <!-- 10:15 -->
                         <tr id="row-10">
@@ -965,12 +953,12 @@
                         <!-- 11:00 -->
                         <tr id="row-11">
                             <td>11:00 - 12:30</td>
-                            <td><div class="rt-card bg-deep"><div class="rt-title">THESIS</div><div class="rt-sub">Library</div></div></td>
-                            <td><div class="rt-card bg-deep"><div class="rt-title">PLAXIS</div><div class="rt-sub">Library</div></div></td>
-                            <td><div class="rt-card bg-deep"><div class="rt-title">THESIS</div><div class="rt-sub">Library</div></div></td>
-                            <td><div class="rt-card bg-deep"><div class="rt-title">PLAXIS</div><div class="rt-sub">Library</div></div></td>
-                            <td><div class="rt-card bg-lecture"><div class="rt-title">Const Mgmt</div></div></td>
-                            <td><div class="rt-card bg-lecture"><div class="rt-title">Const Mgmt</div></div></td>
+                            <td><div class="rt-card bg-deep"><div class="rt-title">Literature Review</div><div class="rt-sub">Library</div></div></td>
+                            <td><div class="rt-card bg-deep"><div class="rt-title">Skills Dev.</div><div class="rt-sub">Library</div></div></td>
+                            <td><div class="rt-card bg-deep"><div class="rt-title">Literature Review</div><div class="rt-sub">Library</div></div></td>
+                            <td><div class="rt-card bg-deep"><div class="rt-title">Skills Dev.</div><div class="rt-sub">Library</div></div></td>
+                            <td><div class="rt-card bg-lecture"><div class="rt-title">Construction Management</div></div></td>
+                            <td><div class="rt-card bg-lecture"><div class="rt-title">Construction Management</div></div></td>
                             <td><div class="rt-card rt-empty"></div></td>
                         </tr>
                         <!-- 12:30 -->
@@ -987,12 +975,12 @@
                         <!-- 02:30 -->
                         <tr id="row-14">
                             <td>02:30 - 04:30</td>
-                            <td><div class="rt-card bg-deep"><div class="rt-title">ArcGIS</div></div></td>
+                            <td><div class="rt-card bg-deep"><div class="rt-title">GIS</div></div></td>
                             <td><div class="rt-card bg-deep"><div class="rt-title">Assignments</div></div></td>
-                            <td><div class="rt-card bg-deep"><div class="rt-title">ArcGIS</div></div></td>
+                            <td><div class="rt-card bg-deep"><div class="rt-title">GIS</div></div></td>
                             <td><div class="rt-card bg-deep"><div class="rt-title">Assignments</div></div></td>
-                            <td><div class="rt-card bg-deep"><div class="rt-title">MHM Research</div></div></td>
-                            <td><div class="rt-card bg-deep"><div class="rt-title">MHM Research</div></div></td>
+                            <td><div class="rt-card bg-deep"><div class="rt-title">MHM </div></div></td>
+                            <td><div class="rt-card bg-deep"><div class="rt-title">MHM </div></div></td>
                             <td><div class="rt-card rt-empty"></div></td>
                         </tr>
                         <!-- 04:30 -->
@@ -1015,12 +1003,12 @@
                         <tr id="row-20">
                             <td>08:00 - 09:00</td>
                             <td><div class="rt-card bg-code"><div class="rt-title">Pandas</div></div></td>
-                            <td><div class="rt-card bg-code"><div class="rt-title">ML Regress</div></div></td>
+                            <td><div class="rt-card bg-code"><div class="rt-title">ML</div></div></td>
                             <td><div class="rt-card bg-code"><div class="rt-title">GeoPandas</div></div></td>
-                            <td><div class="rt-card bg-code"><div class="rt-title">ML Classify</div></div></td>
-                            <td><div class="rt-card bg-code"><div class="rt-title">Scripts</div></div></td>
-                            <td><div class="rt-card bg-code"><div class="rt-title">Theory</div></div></td>
-                            <td><div class="rt-card bg-code"><div class="rt-title">Project</div></div></td>
+                            <td><div class="rt-card bg-code"><div class="rt-title">ML</div></div></td>
+                            <td><div class="rt-card bg-code"><div class="rt-title">Geopandas</div></div></td>
+                            <td><div class="rt-card bg-code"><div class="rt-title">ML</div></div></td>
+                            <td><div class="rt-card bg-code"><div class="rt-title">Pandas</div></div></td>
                         </tr>
                         <!-- 09:00 -->
                         <tr id="row-21">
@@ -1997,7 +1985,6 @@
             }
             checkH--;
         }
-
         const colIndex = day + 1;
         const table = document.querySelector('.routine-table');
         if(table) {
