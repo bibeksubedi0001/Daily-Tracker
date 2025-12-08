@@ -581,7 +581,7 @@
                 <div class="section-title" style="color: #a55eea;">🏗️ Grand Strategy</div>
                 <div style="margin-bottom: 15px;">
                     <div style="display: flex; justify-content: space-between; font-size: 12px; font-weight: 700; margin-bottom: 5px;">
-                        <span>Project Completetion</span>
+                        <span>HAND Modeling</span>
                         <span id="thesisPercent">0%</span>
                     </div>
                     <input type="range" id="thesisProgress" min="0" max="100" value="0" oninput="updateLongTerm('thesis', this.value)" style="width:100%">
@@ -653,38 +653,39 @@
             <div class="tracker-section">
                 <div class="section-title">🧠 Deep Work Sessions</div>
                 <div class="input-group">
-                    <label style="color:var(--accent);">Session I(Skill/Literature):</label>
+                    <label style="color:var(--accent);">I. Skill/Literature:</label>
                     <input type="number" id="s1_time" placeholder="Mins (Target 120)" oninput="calculateAll()" style="width: 100px;">
                     <input type="number" id="s1_acc" placeholder="Done %" oninput="calculateAll()" style="width: 100px;">
                     <span class="rating-display"><span id="s1_score">0</span> / 30</span>
                 </div>
                 <div class="input-group">
-                    <label>Session II (Skill Devlopment):</label>
+                    <label>II. Skill Development:</label>
                     <input type="number" id="s2_time" placeholder="Mins (Target 120)" oninput="calculateAll()" style="width: 100px;">
                     <input type="number" id="s2_acc" placeholder="Done %" oninput="calculateAll()" style="width: 100px;">
                     <span class="rating-display"><span id="s2_score">0</span> / 30</span>
                 </div>
                 <div class="input-group">
-                    <label>Session III (Python/ML):</label>
+                    <label>III. Python/ML:</label>
                     <input type="number" id="s3_time" placeholder="Mins (Target 90)" oninput="calculateAll()" style="width: 100px;">
                     <input type="number" id="s3_acc" placeholder="Done %" oninput="calculateAll()" style="width: 100px;">
                     <span class="rating-display"><span id="s3_score">0</span> / 30</span>
                 </div>
             </div>
 
+
             <div class="tracker-section">
                 <div class="section-title">🔋 Biology & Lifestyle</div>
                 <div class="input-group">
                     <label>Fuel (Diet):</label>
                     <div style="flex-grow: 1; padding: 0 10px;">
-                        <input type="range" id="dietScoreInput" min="0" max="10" value="5" oninput="document.getElementById('dietDisp').innerText = this.value; calculateAll();" style="width:100%">
+                        <input type="range" id="dietScoreInput" min="0" max="10" value="5" oninput="document.getElementById('dietDisp').innerText = this.value; calculateAll();" style="width:25%">
                     </div>
                     <span class="rating-display"><span id="dietDisp">5</span> / 10</span>
                 </div>
                 <div class="input-group">
                     <label>Hydration:</label>
                     <div style="flex-grow: 1; padding: 0 10px;">
-                        <input type="range" id="waterIntake" min="0" max="5" step="0.5" value="2.5" oninput="document.getElementById('waterDisp').innerText = this.value; calculateAll();" style="width:100%">
+                        <input type="range" id="waterIntake" min="0" max="5" step="0.5" value="2.5" oninput="document.getElementById('waterDisp').innerText = this.value; calculateAll();" style="width:28.6%">
                     </div>
                     <span class="rating-display">💧 <span id="waterDisp">2.5</span> L</span>
                     <span class="rating-display" style="background:transparent; color: var(--success); border:none;">+<span id="waterScore">0</span></span>
@@ -711,14 +712,14 @@
             </div>
 
             <div class="tracker-section" style="border-left: 4px solid var(--danger);">
-                <div class="section-title" style="color: var(--danger);">Fresh Mode Protocol</div>
+                <div class="section-title" style="color: var(--danger);">Fresh Mode Protocal</div>
                 <div class="input-group">
                     <label>Status:</label>
                     <select id="maturitylevel" onchange="calculateAll()" style="color: var(--text); font-weight: 500;">
-                        <option value="10">🔥Super Cool (+10)</option>
-                        <option value="0">😐Retained after Bad (+0)</option>
-                        <option value="-10">😫Bad (-10)</option>
-                        <option value="-20">😤Very Bad (-20)</option>
+                        <option value="10">Super Cool (+10)</option>
+                        <option value="0">Retained after Bad (+0)</option>
+                        <option value="-10">Bad (-10)</option>
+                        <option value="-20">Very Bad (-20)</option>
                     </select>
                     <span class="rating-display" style="color: var(--danger); background: var(--bg); border-color: var(--danger);"><span id="habitScore">0</span></span>
                 </div>
@@ -747,9 +748,19 @@
                     <input type="text" id="dayTags" placeholder="#Sick #Exam #Productive">
                 </div>
                 <div class="input-group">
-                    <label>Flow State:</label>
-                    <input type="range" id="flowState" min="1" max="10" value="5" oninput="document.getElementById('flowDisp').innerText = this.value;" style="width:100%">
-                    <span class="rating-display">🌊 <span id="flowDisp">5</span></span>
+                    <label>Interruptions</label>
+                    <input type="range" id="flowState" min="1" max="10" value="5" oninput="document.getElementById('flowDisp').innerText = this.value;" style="width:17.8%">
+                    <span class="rating-display">🚧<span id="flowDisp">5</span></span>
+                </div>
+                <div class="input-group">
+                    <label>Brain Clarity:</label>
+                    <select id="moodSelect">
+                        <option value="5">⚡ Laser Sharp (Peak)</option>
+                        <option value="4">🧠 Clear / Good</option>
+                        <option value="3">🌫️ Mild Fog / Slow</option>
+                        <option value="2">📉 Fried / Exhausted</option>
+                        <option value="1">🤕 Sick / Migraine</option>
+                    </select>
                 </div>
                 <div class="input-group">
                     <label style="color: var(--success);">🏆 Top Win:</label>
@@ -804,8 +815,8 @@
                     <div class="timer-status-text" id="timerStatus">Ready to Engage</div>
                 </div>
                 <select id="timerTarget" class="focus-target-select">
-                    <option value="s1_time">🎯 Session I: Literature Reviews</option>
-                    <option value="s2_time">🛠️ Session II: Skill Development</option>
+                    <option value="s1_time">🎯 Session I: Thesis/Plaxis</option>
+                    <option value="s2_time">🛠️ Session II: Skill Dev</option>
                     <option value="s3_time">🐍 Session III: Python/ML</option>
                 </select>
                 <div class="focus-controls">
@@ -1049,15 +1060,129 @@
 
     // QUOTES
     const quotes = [
-        "We suffer more often in imagination than in reality. – Seneca",
-        "It is not death that a man should fear, but he should fear never beginning to live. – Marcus Aurelius",
-        "No man is free who is not a master of himself. – Epictetus",
-        "To be calm is the highest achievement of the self. – Zen Proverb",
-        "Discipline is choosing between what you want now and what you want most. – Abraham Lincoln",
-        "The impediment to action advances action. What stands in the way becomes the way. – Marcus Aurelius",
-        "Waste no more time arguing about what a good man should be. Be one. – Marcus Aurelius",
-        "He who has a why to live can bear almost any how. – Friedrich Nietzsche"
-    ];
+    // --- The Engineer's Mindset (Civil Engineering Core) ---
+    "Scientists study the world as it is; engineers create the world that has never been. – Theodore von Kármán",
+    "Structural engineering is the art of molding materials we do not wholly understand into shapes we cannot precisely analyze. – J.E. Gordon",
+    "The foundation determines the height of the skyscraper. – Civil Engineering Maxim",
+    "God made the world, but civil engineers made it livable. ",
+    "Measure twice, cut once, calculate infinitely. – Engineering Proverb",
+    "An engineer who doesn't respect the forces of nature will be destroyed by them.",
+    "Civil Engineering: Because even architects need heroes. ",
+    "A bridge is not just steel and concrete; it is a promise of safe passage.",
+    "Gravity is the only law that never sleeps. – Engineering Truth",
+    "In a world of chaos, the engineer brings order through design.",
+    "The road to success is under construction. – Civil Engineering Pun",
+    "Concrete is hard, but the will of the engineer must be harder. ",
+    "Design for the worst case, hope for the best case, live in the real case. – Engineering Philosophy",
+    "Simplicity is the ultimate sophistication in design. – Leonardo da Vinci",
+    "We shape our buildings; thereafter they shape us. – Winston Churchill",
+    "Engineering is not about being perfect; it's about being safe and efficient. ",
+    "To define it is to limit it, but to design it is to realize it. ",
+    "Load, Shear, Moment, Deflection: The four horsemen of the engineer's apocalypse. – IOE Student Life",
+    "Theory guides, but experiment decides.",
+    "The best way to predict the future is to design it. – Buckminster Fuller",
+
+    // --- The Hydrologist & Modeler (HEC-RAS, ArcGIS, Research) ---
+    "Be like water making its way through cracks. Adjust to the object, and you shall find a way around or through it. – Bruce Lee",
+    "100 days of HEC-RAS is not just a challenge; it is a transformation of discipline.",
+    "A DEM is just pixels until you give it hydrological purpose. – GIS Wisdom",
+    "To understand the river, you must become the flow. – Hydraulic Philosophy",
+    "Data without analysis is just noise; Data with ArcGIS is a map to the truth.",
+    "The map is not the territory, but it shows us where the water goes. – Alfred Korzybski (Adapted)",
+    "Modeling reality requires the humility to know you are always an approximation. – George Box",
+    "In God we trust; all others must bring data. – W. Edwards Deming",
+    "Consistency in the '100 Days Challenge' beats intensity in one day.",
+    "Your HAND model calculates the depth, but your mind must calculate the risk.",
+    "Every watershed tells a story; it is your job to read it. – Hydrology Truth",
+    "Machine Learning allows us to see patterns in the soil that the eye cannot. – Geotech AI",
+    "Prediction is the highest form of understanding. – Research Wing Maxim",
+    "Code is the new concrete; Python is the new steel. – Modern Engineering",
+    "Garbage in, garbage out. Clean your data like you clean your room. – Modeling Rule",
+
+    // --- The Geotech & Seismic Analyst (PLAXIS, Earthquakes) ---
+    "Solid ground is not found; it is verified by calculation. – Geotechnical Truth",
+    "The earth speaks in waves; site response analysis is how we listen.",
+    "We build on soil, but we rely on physics. – PLAXIS Wisdom",
+    "Shear wave velocity doesn't lie, even if the surface looks calm.",
+    "Kathmandu shakes, but our designs must stand. – Seismic Engineering",
+    "Understanding the ground below is more important than the structure above.",
+    "Stress and strain are not just physical terms; they are life lessons.",
+    "A structure is only as strong as the soil it sits on.",
+    "Earthquakes don't kill people; poorly built buildings do. – Seismic Reality",
+    "Finite element analysis: Breaking big problems into small, solvable victories.",
+
+    // --- The Trekker & Explorer (Nature, Tsho Rolpa, Mountains) ---
+    "The view is best after the hardest climb. – Trekking Wisdom",
+    "At 5000m, you don't conquer the mountain; you conquer yourself.",
+    "Tsho Rolpa didn't come to you; you had to go to it.",
+    "The trail teaches you that one step at a time is the only way forward.",
+    "High altitude clears the lungs and the mind.",
+    "Nature is the ultimate engineer; we are just students.",
+    "Leave nothing but footprints, take nothing but data. – Environmental Engineering",
+    "Endurance is not just for the body; it is for the spirit.",
+    "The mountains are calling, and I must go... to analyze their slope stability. – Geotech Trekker",
+    "There is no wifi in the mountains, but you will find a better connection.",
+    "Cold winds and steep paths forge the strongest wills.",
+    "A heavy pack on the trail makes the burden of life feel light.",
+    "Climb mountains not so the world can see you, but so you can see the world.",
+    "The summit is just the halfway point. – Mountaineering Rule",
+    "Every peak you climb teaches you something about the valley you left.",
+
+    // --- Leadership & Legacy (CESS, MAPS, Mentorship) ---
+    "To teach is to learn twice. – Mentorship Philosophy",
+    "A portfolio is not a CV; it is the evidence of your capability.",
+    "Research is seeing what everybody else has seen and thinking what nobody else has thought. – Albert Szent-Györgyi",
+    "As Research Wing Correspondent, you don't just report news; you make it.",
+    "Organizing a Hackathon is engineering human potential.",
+    "The true test of a leader is how they function under pressure.",
+    "Don't just be a student of IOE; be a pillar of it.",
+    "Collaboration divides the task and multiplies the success.",
+    "Your thesis is your signature on the world of academia.",
+    "Mentoring entrance students is planting trees under whose shade you may never sit.",
+    "Excellence is not a skill, it’s an attitude. – Ralph Marston",
+    "Be the senior you wish you had when you were a freshman.",
+    "Create value, and success will follow.",
+    "The best way to lead is to serve.",
+
+    // --- Nepali Wisdom (Life & Culture) ---
+    "हिमाल चढ्नेले खुट्टा कमाउनु हुँदैन। (One climbing a mountain shouldn't have trembling legs.)",
+    "इन्जिनियरको सही चिनारी उसको कामको गुणस्तर हो। (An engineer's true identity is the quality of their work.)",
+    "सपना देख्नेले मात्र शिखर चुम्छ। (Only those who dream kiss the summit.)",
+    "परिश्रम विनाको सफलता बालुवाको घर जस्तै हो। (Success without hard work is like a house of sand.)",
+    "विद्या ददाति विनयं। (Knowledge gives humility.)",
+    "समय बलवान छ, यसलाई खेर नफाल। (Time is powerful, do not waste it.)",
+    "काँडा बिनाको गुलाब र संघर्ष बिनाको जीवन हुँदैन। (No rose without thorns, no life without struggle.)",
+    "जहाँ इच्छा, त्यहाँ उपाय। (Where there is a will, there is a way.)",
+    "आफ्नो माटो र आफ्नो बाटो कहिल्यै नबिर्सनु। (Never forget your soil and your path.)",
+    "सिर्जना नै जीवनको धड्कन हो। (Creation is the heartbeat of life.)",
+    "ठूलो मान्छे बन्नु भन्दा असल मान्छे बन्नु ठूलो कुरा हो। (Being a good person is greater than being a big person.)",
+    "असफलता नै सफलताको पहिलो खुड्किलो हो। (Failure is the first step to success.)",
+    "धैर्यता र निरन्तरताले पहाड पनि फोड्न सकिन्छ। (Patience and persistence can break even mountains.)",
+    "ज्ञान बाड्दा बढ्छ। (Knowledge increases when shared.)",
+    "जीवन एक प्रयोगशाला हो। (Life is a laboratory.)",
+
+    // --- Stoicism & The Final Push (Fourth Year Grind) ---
+    "We suffer more often in imagination than in reality. – Seneca",
+    "It is not death that a man should fear, but he should fear never beginning to live. – Marcus Aurelius",
+    "No man is free who is not a master of himself. – Epictetus",
+    "Discipline is choosing between what you want now and what you want most. – Abraham Lincoln",
+    "The impediment to action advances action. What stands in the way becomes the way. – Marcus Aurelius",
+    "Waste no more time arguing about what a good man should be. Be one. – Marcus Aurelius",
+    "He who has a why to live can bear almost any how. – Friedrich Nietzsche",
+    "You have power over your mind - not outside events. Realize this, and you will find strength. – Marcus Aurelius",
+    "The only easy day was yesterday. – Navy SEAL Motto",
+    "Memento Mori. (Remember you will die, so live now.)",
+    "Amor Fati. (Love your fate.)",
+    "Iron sharpens iron, so one man sharpens another.",
+    "Do not pray for an easy life, pray for the strength to endure a difficult one. – Bruce Lee",
+    "Success is rented, and the rent is due every day.",
+    "Your LaTeX code should be as clean as your conscience.",
+    "A final year project is not just a grade; it is the culmination of four years of grind.",
+    "Sleep is for those who do not have a deadline. (Just kidding, sleep is recovery.)",
+    "Focus on the process, not the outcome. – Stoic Rule",
+    "Man conquers the world by conquering himself. – Zeno",
+    "I am the master of my fate, I am the captain of my soul. – Invictus"
+];
 
     window.onload = function() {
         const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
@@ -1662,7 +1787,7 @@
         document.getElementById('medScore').innerText = medPoints;
         total += medPoints;
         const sHours = parseFloat(document.getElementById('screenHours').value) || 0;
-        let screenScore = 25 - (1.6 * Math.pow(sHours, 1.6));
+        let screenScore = 25 - (1.288 * Math.pow(sHours, 1.288));
         if(screenScore < -20) screenScore = -20;
         document.getElementById('screenScore').innerText = Math.round(screenScore);
         total += screenScore;
@@ -1681,9 +1806,9 @@
             const [h, m] = bedTime.split(':').map(Number);
             let timeVal = h + m/60;
             if (h < 6) timeVal += 24;
-            if (timeVal < 22.08) sleepS = 15;
-            else if (timeVal < 23) sleepS = 9;
-            else if (timeVal < 24) sleepS = 0;
+            if (timeVal < 22.08) sleepScore = 15;
+            else if (timeVal < 23) sleepScore = 9;
+            else if (timeVal < 24) sleepScore = 0;
         }
         document.getElementById('sleepScore').innerText = Math.round(sleepScore);
         total += sleepScore;
