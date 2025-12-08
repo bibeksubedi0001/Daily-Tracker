@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bibek's Master Protocol | God Mode v3.13 Optimized</title>
+    <title>Bibek's Master Protocol | God Mode v3.29 Optimized</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -280,21 +280,33 @@
 
         /* DASHBOARD */
         .score-dashboard {
-            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
-            color: white;
-            padding: 25px 35px;
-            border-radius: 20px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 20px;
-            margin-top: 40px;
-            position: sticky;
-            bottom: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-            z-index: 100;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-        .score-item { display: flex; flex-direction: column; }
+    background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+    color: white;
+    padding: 25px 20px; /* Reduced side padding slightly */
+    border-radius: 20px;
+    
+    /* THE FIX: Force 5 Equal Columns */
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); 
+    gap: 10px;
+    align-items: center; /* Vertically center everything */
+    
+    margin-top: 40px;
+    position: sticky;
+    bottom: 20px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    z-index: 100;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+/* Ensure every item inside is centered */
+.score-item { 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center;
+    text-align: center;
+}
         .score-val { 
             font-size: clamp(24px, 5vw, 32px);
             font-weight: 900; 
@@ -647,7 +659,7 @@
         .focus-target-select {
             background: rgba(255,255,255,0.05);
             border: 1px solid rgba(255,255,255,0.1);
-            color: rgba(255,255,255,0.9);
+            color: rgba(3, 180, 183, 0.832);
             padding: 12px 24px;
             border-radius: 30px;
             font-family: 'Inter', sans-serif;
@@ -1013,6 +1025,18 @@
 
             <div class="tracker-section">
     <div class="section-title">🧠 Deep Work Sessions</div>
+
+    <div style="display: flex; gap: 15px; margin-bottom: 8px; align-items: center;">
+        <div style="min-width: 140px;"></div> 
+        
+        <div style="width: 100px; text-align: center; font-size: 10px; font-weight: 800; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.5px;">
+            Time (Min)
+        </div>
+        
+        <div style="width: 100px; text-align: center; font-size: 10px; font-weight: 800; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.5px;">
+            Done (%)
+        </div>
+    </div>
     <div class="input-group">
         <label style="color:var(--accent);">I. Skill/Literature:</label>
         <input type="number" id="s1_time" oninput="calculateAll()" style="width: 100px;">
@@ -1139,35 +1163,38 @@
         <div class="score-val" id="totalScore">0</div>
     </div>
 
-    <div class="score-item" style="text-align: center;">
+    <div class="score-item">
         <div class="score-label">Streak</div>
         <div class="score-val" id="streakCount">0</div>
     </div>
 
-    <div class="score-item" style="text-align: center;">
+    <div class="score-item">
         <div class="score-label">Status</div>
-        <div class="score-val" id="statusText" style="font-size: 30px;">--</div>
+        <div class="score-val" id="statusText" style="font-size: 26px;">--</div>
     </div>
 
-    <div class="score-item" style="text-align: right; display: flex; flex-direction: column; align-items: flex-end; justify-content: center;">
+    <div class="score-item">
         <div class="score-label" style="margin-bottom: 5px;">Last 7 Days</div>
-       <div id="miniHeatmapContainer" style="display: flex; gap: 6px; align-items: center; justify-content: flex-end; height: 100%;"> 
+        <div id="miniHeatmapContainer" style="display: flex; gap: 4px; align-items: center; justify-content: center;">
             </div>
-    </div> 
-    <div class="score-item" style="text-align: right;">
-    <div class="score-label">Deep Work</div>
-    <div class="score-val" style="color: #ffffff;">
-        <span id="dashboardDeepWork">0.0</span><span style="font-size: 14px; margin-left: 2px; opacity: 0.7;">h</span>
+    </div>
+
+    <div class="score-item">
+        <div class="score-label">Deep Work</div>
+        <div class="score-val" style="color: #3b82f6;">
+            <span id="dashboardDeepWork">0.0</span><span style="font-size: 14px; margin-left: 2px; opacity: 0.7;">h</span>
+        </div>
+    </div>
+
+    <div class="xp-bar-container">
+        <div class="xp-bar-fill" id="xpBarFill"></div>
+    </div>
+    
+    <div style="grid-column: 1/-1; display: flex; justify-content: space-between; font-size: 11px; font-weight: 700; text-transform: uppercase; color: rgba(255,255,255,0.7); margin-top: 5px;">
+        <span id="currentLevelText">Lvl 1</span>
+        <span><span id="currentXP">0</span> / 500 XP to Next</span>
     </div>
 </div>
-                <div class="xp-bar-container">
-                    <div class="xp-bar-fill" id="xpBarFill"></div>
-                </div>
-                <div style="grid-column: 1/-1; display: flex; justify-content: space-between; font-size: 11px; font-weight: 700; text-transform: uppercase; color: rgba(255,255,255,0.7);">
-                    <span id="currentLevelText">Lvl 1</span>
-                    <span><span id="currentXP">0</span> / 500 XP to Next</span>
-                </div>
-            </div>
 
             <div class="action-bar">
                 <button type="button" class="btn btn-save" onclick="saveData()">💾 Save & Sync</button>
@@ -1195,11 +1222,12 @@
                     <option value="s3_time">🐍 Session III: Python/ML</option>
                 </select>
                 <div class="focus-controls">
-                    <button type="button" class="btn-focus stop" onclick="stopTimer()" title="Log & Finish">◼</button>
-                    <button type="button" class="btn-focus start" onclick="startTimer()" title="Start Focus">▶</button>
-                    <button type="button" class="btn-focus" onclick="pauseTimer()" title="Pause">❚❚</button>
-                    <button type="button" id="noiseBtn" class="btn-focus" onclick="toggleBrownNoise()" title="Toggle Focus Audio" style="width: auto; padding: 0 15px; border-radius: 30px; font-size: 12px; font-weight: 700;">🔇 Audio</button>
-                </div>
+    <button type="button" class="btn-focus stop" onclick="stopTimer()" title="Log & Finish">◼</button>
+    
+    <button type="button" id="timerToggleBtn" class="btn-focus start" onclick="toggleTimer()" title="Start/Pause">▶</button>
+    
+    <button type="button" id="noiseBtn" class="btn-focus" onclick="toggleBrownNoise()" title="Toggle Focus Audio" style="width: auto; padding: 0 15px; border-radius: 30px; font-size: 12px; font-weight: 700;">🔇 Audio</button>
+</div>
                 <button class="zen-toggle-btn" onclick="toggleZenMode()">⛶ Enter Zen Mode</button>
             </div>
         </div>
@@ -1802,87 +1830,83 @@ function saveLongTermText(key, val) {
     }
 
     function drawRadarChart(dataList) {
-        const canvas = document.getElementById('radarCanvas');
-        if(!canvas) return;
-        const ctx = canvas.getContext('2d');
-        const W = canvas.parentElement.clientWidth;
-        const H = canvas.parentElement.clientHeight;
-        canvas.width = W; canvas.height = H;
+    const canvas = document.getElementById('radarCanvas');
+    if(!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const W = canvas.parentElement.clientWidth;
+    const H = canvas.parentElement.clientHeight;
+    canvas.width = W; canvas.height = H;
 
-        // Draw Config
-        const cx = W / 2;
-        const cy = H / 2;
-        const radius = Math.min(W, H) / 2 - 40;
-        const sides = 5;
-        const angleStep = (Math.PI * 2) / sides;
-        const labels = ["Work", "Sleep", "Diet", "Flow", "Discipline"];
+    // 1. Setup Geometry
+    const cx = W / 2;
+    const cy = H / 2;
+    const radius = Math.min(W, H) / 2 - 40;
+    const sides = 5;
+    const angleStep = (Math.PI * 2) / sides;
+    const baseLabels = ["Work", "Sleep", "Diet", "Flow", "Discpline"];
 
-        // Clear
-        ctx.clearRect(0, 0, W, H);
-
-        // Background Web (Always Draw)
-        ctx.strokeStyle = '#e2e8f0';
-        ctx.lineWidth = 1;
-        for (let level = 1; level <= 4; level++) {
-            ctx.beginPath();
-            const r = (radius / 4) * level;
-            for (let i = 0; i <= sides; i++) {
-                const angle = i * angleStep - Math.PI / 2;
-                const x = cx + Math.cos(angle) * r;
-                const y = cy + Math.sin(angle) * r;
-                if (i === 0) ctx.moveTo(x, y);
-                else ctx.lineTo(x, y);
-            }
-            ctx.closePath();
-            ctx.stroke();
-        }
-
-        // Labels (Always Draw)
-        ctx.fillStyle = '#475569';
-        ctx.font = "11px Poppins";
-        ctx.textAlign = "center";
-        labels.forEach((label, i) => {
-            const angle = i * angleStep - Math.PI / 2;
-            const x = cx + Math.cos(angle) * (radius + 20);
-            const y = cy + Math.sin(angle) * (radius + 20);
-            ctx.fillText(label, x, y + 4);
-        });
-
-        // --- EMPTY STATE HANDLING ---
-        if (dataList.length === 0) {
-            ctx.fillStyle = '#94a3b8';
-            ctx.font = "14px Inter";
-            ctx.fillText("No Data", cx, cy);
-            return;
-        }
-
-        // Aggregates
+    // 2. Calculate Stats FIRST (So we can show them)
+    let stats = [0, 0, 0, 0, 0]; // Default
+    if (dataList.length > 0) {
         let agg = { deep: 0, sleep: 0, diet: 0, focus: 0, disc: 0 };
         dataList.forEach(id => {
             const d = JSON.parse(localStorage.getItem(id));
-            agg.deep += Math.min(((parseFloat(d.inputs.s1_time)+parseFloat(d.inputs.s2_time)+parseFloat(d.inputs.s3_time))/360), 1); 
             
-            let sScore = 0; 
+            // Deep Work (Normalized to 6 hours = 1.0)
+            const totalMins = (parseFloat(d.inputs.s1_time)||0) + (parseFloat(d.inputs.s2_time)||0) + (parseFloat(d.inputs.s3_time)||0);
+            agg.deep += Math.min(totalMins / 360, 1); 
+            
+            // Sleep (Bed before 10pm = 1.0, else 0.5)
+            let sScore = 0.5;
             const bed = d.inputs.bedTime;
-            if(bed && parseInt(bed.split(':')[0]) < 22) sScore = 1; else sScore = 0.5; 
+            if(bed) {
+                const h = parseInt(bed.split(':')[0]);
+                if(h >= 20 && h < 22) sScore = 1.0; 
+            }
             agg.sleep += sScore;
 
+            // Diet (0-10 scale)
             agg.diet += (parseInt(d.inputs.dietScoreInput||5) / 10);
+            
+            // Flow (1-10 scale)
             agg.focus += (parseInt(d.inputs.flowState||5) / 10);
+            
+            // Discipline (Maturity > 0 is good)
             agg.disc += (parseInt(d.inputs.maturitylevel) >= 0 ? 1 : 0.4); 
         });
 
         const count = dataList.length;
-        // Logic holds for count = 1. Division by 1 returns the exact value.
-        const stats = [
+        stats = [
             agg.deep / count,
             agg.sleep / count,
             agg.diet / count,
             agg.focus / count,
             agg.disc / count
         ];
+    }
 
-        // Draw Data Shape
+    // 3. Clear Canvas
+    ctx.clearRect(0, 0, W, H);
+
+    // 4. Draw Background Web
+    ctx.strokeStyle = '#e2e8f0';
+    ctx.lineWidth = 1;
+    for (let level = 1; level <= 4; level++) {
+        ctx.beginPath();
+        const r = (radius / 4) * level;
+        for (let i = 0; i <= sides; i++) {
+            const angle = i * angleStep - Math.PI / 2;
+            const x = cx + Math.cos(angle) * r;
+            const y = cy + Math.sin(angle) * r;
+            if (i === 0) ctx.moveTo(x, y);
+            else ctx.lineTo(x, y);
+        }
+        ctx.closePath();
+        ctx.stroke();
+    }
+
+    // 5. Draw Data Shape
+    if (dataList.length > 0) {
         ctx.beginPath();
         stats.forEach((val, i) => {
             const angle = i * angleStep - Math.PI / 2;
@@ -1893,12 +1917,40 @@ function saveLongTermText(key, val) {
             else ctx.lineTo(x, y);
         });
         ctx.closePath();
-        ctx.fillStyle = 'rgba(139, 92, 246, 0.2)'; // Purple tint
+        ctx.fillStyle = 'rgba(59, 130, 246, 0.2)'; // Blue tint
         ctx.fill();
-        ctx.strokeStyle = '#8b5cf6';
+        ctx.strokeStyle = '#3b82f6';
         ctx.lineWidth = 2;
         ctx.stroke();
     }
+
+    // 6. Draw Labels WITH Numbers
+    ctx.font = "bold 11px Inter";
+    ctx.textAlign = "center";
+    
+    baseLabels.forEach((label, i) => {
+        const angle = i * angleStep - Math.PI / 2;
+        // Push labels out slightly further (radius + 25)
+        const x = cx + Math.cos(angle) * (radius + 25); 
+        const y = cy + Math.sin(angle) * (radius + 25);
+        
+        // Get percentage
+        const pct = Math.round(stats[i] * 100);
+        
+        // Dynamic Coloring for the number
+        let color = '#64748b'; // default gray
+        if(pct >= 80) color = '#10b981'; // Green
+        else if(pct < 50) color = '#ef4444'; // Red
+
+        // Draw Label Name
+        ctx.fillStyle = '#1e293b';
+        ctx.fillText(label, x, y);
+        
+        // Draw Number below it
+        ctx.fillStyle = color;
+        ctx.fillText(`${pct}%`, x, y + 12);
+    });
+}
 
     function renderHeatmap(registry) {
         const container = document.getElementById('heatmapContainer');
@@ -2044,11 +2096,22 @@ function renderMiniHeatmap() {
     let timerSeconds = 0;
     let isTimerRunning = false;
 
+    // --- UPDATED TIMER FUNCTIONS (v3.13) ---
+
+    // 1. START: Starts time & turns button to "Pause" icon
     function startTimer() {
         if(isTimerRunning) return;
         isTimerRunning = true;
+        
+        // UI Updates: Status Text
         document.getElementById('timerStatus').innerText = "FLOW STATE ENGAGED";
         document.getElementById('timerStatus').style.color = "#00f2ff";
+        
+        // UI Updates: Button Icon -> Change to PAUSE symbol
+        const btn = document.getElementById('timerToggleBtn');
+        if(btn) btn.innerHTML = "❚❚"; 
+
+        // Start the Interval
         const startTime = Date.now() - (timerSeconds * 1000);
         timerInterval = setInterval(() => {
             const elapsed = Date.now() - startTime;
@@ -2057,22 +2120,33 @@ function renderMiniHeatmap() {
         }, 1000);
     }
 
+    // 2. PAUSE: Stops time & turns button to "Play" icon
     function pauseTimer() {
         if(!isTimerRunning) return;
         clearInterval(timerInterval);
         isTimerRunning = false;
+        
+        // UI Updates: Status Text
         document.getElementById('timerStatus').innerText = "PAUSED";
         document.getElementById('timerStatus').style.color = "#ffa502";
+
+        // UI Updates: Button Icon -> Change back to PLAY symbol
+        const btn = document.getElementById('timerToggleBtn');
+        if(btn) btn.innerHTML = "▶"; 
     }
 
+    // 3. STOP: Resets everything & ensures button is "Play" icon
     function stopTimer() {
         if(isTimerRunning) {
              clearInterval(timerInterval);
              isTimerRunning = false;
         }
+        
+        // Log Logic (Same as before)
         const targetId = document.getElementById('timerTarget').value;
         const currentVal = parseFloat(document.getElementById(targetId).value) || 0;
         const minutesAdded = Math.floor(timerSeconds / 60);
+        
         if(minutesAdded > 0) {
             if(confirm(`Add ${minutesAdded} minutes to session log?`)) {
                 const inputEl = document.getElementById(targetId);
@@ -2081,16 +2155,26 @@ function renderMiniHeatmap() {
                     calculateAll();
                     alert("Logged successfully.");
                 }
-                timerSeconds = 0;
-                updateTimerDisplay();
-                document.getElementById('timerStatus').innerText = "SESSION COMPLETE";
-                document.getElementById('timerStatus').style.color = "#00b894";
             }
+        }
+
+        // RESET TIMER & UI
+        timerSeconds = 0;
+        updateTimerDisplay();
+        document.getElementById('timerStatus').innerText = "READY";
+        document.getElementById('timerStatus').style.color = "rgba(255,255,255,0.8)";
+        
+        // UI Updates: Ensure button is reset to PLAY symbol
+        const btn = document.getElementById('timerToggleBtn');
+        if(btn) btn.innerHTML = "▶"; 
+    }
+    
+    // 4. TOGGLE: The smart switch logic
+    function toggleTimer() {
+        if (isTimerRunning) {
+            pauseTimer();
         } else {
-            alert("Session too short to log (< 1 min).");
-            timerSeconds = 0;
-            updateTimerDisplay();
-            document.getElementById('timerStatus').innerText = "READY";
+            startTimer();
         }
     }
 
@@ -2262,6 +2346,7 @@ function renderMiniHeatmap() {
     
     const dwDisplay = document.getElementById('dashboardDeepWork');
     if(dwDisplay) dwDisplay.innerText = totalHours;
+    
         total = Math.round(total);
         document.getElementById('totalScore').innerText = total;
         const statusEl = document.getElementById('statusText');
