@@ -1292,6 +1292,27 @@
                     <!-- JS Injected -->
                 </div>
             </div>
+            <div class="chart-box" style="grid-column: 1 / -1; height: 380px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+        <h3>🧪 Correlation Lab <span style="font-size:10px; opacity:0.6;">(Linear Regression)</span></h3>
+        <div style="display: flex; gap: 10px;">
+            <select id="corrX" onchange="drawCorrelationChart()" class="focus-target-select" style="padding: 4px 8px; font-size: 11px; margin: 0; background: var(--bg); color: var(--text);">
+                <option value="sleep">X: Sleep Score</option>
+                <option value="diet">X: Diet Score</option>
+                <option value="focus">X: Flow State</option>
+                <option value="work">X: Deep Work</option>
+            </select>
+            <select id="corrY" onchange="drawCorrelationChart()" class="focus-target-select" style="padding: 4px 8px; font-size: 11px; margin: 0; background: var(--bg); color: var(--text);">
+                <option value="work">Y: Deep Work</option>
+                <option value="total">Y: Daily Score</option>
+                <option value="focus">Y: Flow State</option>
+                <option value="sleep">Y: Sleep Score</option>
+            </select>
+        </div>
+    </div>
+    <canvas id="correlationCanvas"></canvas>
+    <div id="corrStats" style="text-align: center; font-size: 11px; color: var(--text-light); margin-top: 5px; font-family: 'JetBrains Mono';"></div>
+</div>
         </div>
 
         <!-- Automated Insight -->
@@ -1659,6 +1680,7 @@ function saveLongTermText(key, val) {
             drawRadarChart(last7);  
             renderHeatmap(registry); 
             generateInsight(last30);
+            drawCorrelationChart();
         }
 
         // Handle empty data case for stats only
@@ -1701,6 +1723,115 @@ function saveLongTermText(key, val) {
         );
     }
 
+    function drawCorrelationChart() {
+    const canvas = document.getElementById('correlationCanvas');
+    if(!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const W = canvas.parentElement.clientWidth;
+    const H = canvas.parentElement.clientHeight - 60; // Adjust for header/footer
+    canvas.width = W; canvas.height = H;
+
+    // 1. Get Data
+    const xKey = document.getElementById('corrX').value;
+    const yKey = document.getElementById('corrY').value;
+    
+    let registry = JSON.parse(localStorage.getItem(INDEX_KEY) || "[]");
+    let points = [];
+
+    registry.forEach(id => {
+        const d = JSON.parse(localStorage.getItem(id));
+        const val = (k) => {
+            if(k === 'total') return parseInt(d.totalScore);
+            if(k === 'work') return (parseFloat(d.inputs.s1_time||0) + parseFloat(d.inputs.s2_time||0) + parseFloat(d.inputs.s3_time||0))/60;
+            if(k === 'sleep') {
+               // Calculate Sleep Score dynamic re-calc
+               const bed = d.inputs.bedTime;
+               if(!bed) return 0;
+               let h = parseInt(bed.split(':')[0]);
+               if(h < 6) h += 24;
+               return (h < 22) ? 15 : (h < 23 ? 9 : 0);
+            }
+            if(k === 'diet') return parseInt(d.inputs.dietScoreInput||0);
+            if(k === 'focus') return parseInt(d.inputs.flowState||0);
+            return 0;
+        };
+        points.push({ x: val(xKey), y: val(yKey), date: d.date.slice(5) });
+    });
+
+    // Clear
+    ctx.clearRect(0, 0, W, H);
+    
+    // Empty Check
+    if(points.length < 2) {
+        ctx.fillStyle = "#94a3b8"; ctx.textAlign = "center"; ctx.fillText("Need 2+ days of data", W/2, H/2);
+        return;
+    }
+
+    // 2. Scale Logic
+    const pad = 40;
+    const maxX = Math.max(...points.map(p => p.x)) || 10;
+    const maxY = Math.max(...points.map(p => p.y)) || 10;
+    
+    const scaleX = (val) => pad + (val / maxX) * (W - pad*2);
+    const scaleY = (val) => (H - pad) - (val / maxY) * (H - pad*2);
+
+    // Draw Axes
+    ctx.strokeStyle = '#e2e8f0'; ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(pad, pad); ctx.lineTo(pad, H - pad); ctx.lineTo(W - pad, H - pad);
+    ctx.stroke();
+
+    // 3. Draw Points
+    points.forEach(p => {
+        const px = scaleX(p.x);
+        const py = scaleY(p.y);
+        
+        ctx.beginPath();
+        ctx.arc(px, py, 5, 0, Math.PI*2);
+        ctx.fillStyle = "rgba(59, 130, 246, 0.6)"; // Blue
+        ctx.fill();
+        ctx.strokeStyle = "#fff";
+        ctx.stroke();
+        
+        // Tooltip text
+        ctx.fillStyle = "#64748b"; ctx.font = "10px Inter"; ctx.textAlign = "center";
+        ctx.fillText(p.date, px, py - 8);
+    });
+
+    // 4. Linear Regression (Least Squares) - The "Engine"
+    let sumX = 0, sumY = 0, sumXY = 0, sumXX = 0;
+    const n = points.length;
+    points.forEach(p => {
+        sumX += p.x;
+        sumY += p.y;
+        sumXY += p.x * p.y;
+        sumXX += p.x * p.x;
+    });
+    
+    const slope = (n * sumXY - sumX * sumY) / (n * sumXX - sumX * sumX);
+    const intercept = (sumY - slope * sumX) / n;
+
+    // Draw Regression Line
+    ctx.beginPath();
+    ctx.strokeStyle = "#ef4444"; // Red Trend Line
+    ctx.lineWidth = 2;
+    ctx.setLineDash([5, 5]);
+    
+    const startX = 0;
+    const endX = maxX;
+    const startY = slope * startX + intercept;
+    const endY = slope * endX + intercept;
+
+    ctx.moveTo(scaleX(startX), scaleY(startY));
+    ctx.lineTo(scaleX(endX), scaleY(endY));
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // 5. Update Stats Text
+    const correlation = slope > 0 ? "POSITIVE" : "NEGATIVE";
+    document.getElementById('corrStats').innerHTML = 
+        `Trend: <span style="color:${slope>0?'#10b981':'#ef4444'}">${correlation}</span> correlation. Slope: ${slope.toFixed(2)}`;
+}
     function updateStatDisplay(score, deep, sleep, best) {
         document.getElementById('wkAvgScore').innerText = score;
         document.getElementById('wkTotalDeep').innerText = deep + "h";
