@@ -922,7 +922,7 @@
 <div class="container">
     <header>
         <div>
-            <h1>Daily Tracker v3.34</h1>
+            <h1>Daily Tracker v3.12</h1>
             <h2>Bibek Subedi | Final Year Civil Engineering Studnet </h2>
             <div id="quoteDisplay" class="quote-box">Loading Wisdom...</div>
         </div>
@@ -1715,119 +1715,173 @@ function saveLongTermText(key, val) {
     }
 
     function drawTrendChart(dataList) {
-        const canvas = document.getElementById('trendCanvas');
-        if(!canvas) return;
-        const ctx = canvas.getContext('2d');
-        const W = canvas.parentElement.clientWidth;
-        const H = canvas.parentElement.clientHeight;
-        canvas.width = W; canvas.height = H;
+    const canvas = document.getElementById('trendCanvas');
+    if(!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const W = canvas.parentElement.clientWidth;
+    const H = canvas.parentElement.clientHeight;
+    canvas.width = W; canvas.height = H;
 
-        // Clear
-        ctx.clearRect(0, 0, W, H);
+    // Save data to canvas for the click handler to access later
+    canvas.lastData = dataList;
 
-        // --- EMPTY STATE HANDLING ---
-        if (dataList.length === 0) {
-            ctx.fillStyle = '#94a3b8';
-            ctx.font = "14px Inter";
-            ctx.textAlign = "center";
-            ctx.fillText("No Data Yet", W/2, H/2);
-            return;
-        }
+    // Clear
+    ctx.clearRect(0, 0, W, H);
 
-        // Data Prep
-        const points = dataList.map(id => {
-            const d = JSON.parse(localStorage.getItem(id));
-            const score = parseInt(d.totalScore || 0);
-            const work = (parseFloat(d.inputs.s1_time||0) + parseFloat(d.inputs.s2_time||0) + parseFloat(d.inputs.s3_time||0)) / 60; // Hours
-            return { date: d.date.slice(8), score: score, work: work }; // Day only
-        });
+    // --- EMPTY STATE HANDLING ---
+    if (dataList.length === 0) {
+        ctx.fillStyle = '#94a3b8';
+        ctx.font = "14px Inter";
+        ctx.textAlign = "center";
+        ctx.fillText("No Data Yet", W/2, H/2);
+        return;
+    }
 
-        // Config
-        const pad = 40;
-        const chartW = W - pad*2;
-        const chartH = H - pad*2;
-        // Handle single point spacing by defaulting stepX to 0, logic handled in loop
-        const stepX = points.length > 1 ? chartW / (points.length - 1) : 0;
+    // Data Prep
+    const points = dataList.map(id => {
+        const d = JSON.parse(localStorage.getItem(id));
+        const score = parseInt(d.totalScore || 0);
+        const work = (parseFloat(d.inputs.s1_time||0) + parseFloat(d.inputs.s2_time||0) + parseFloat(d.inputs.s3_time||0)) / 60; 
+        return { date: d.date.slice(5), fullDate: d.date, score: score, work: work.toFixed(1) }; 
+    });
 
-        // Draw Axes
+    // Config
+    const pad = 40;
+    const chartW = W - pad*2;
+    const chartH = H - pad*2;
+    const stepX = points.length > 1 ? chartW / (points.length - 1) : 0;
+    const MAX_SCORE = 120; // Explicit Max Scale
+
+    // 1. Draw Axes & Grid (0, 60, 120)
+    ctx.beginPath();
+    ctx.strokeStyle = '#e2e8f0';
+    ctx.lineWidth = 1;
+    
+    [0, 0.5, 1].forEach(r => {
+        const y = pad + chartH - (r * chartH);
+        ctx.moveTo(pad, y);
+        ctx.lineTo(W - pad, y);
+        
+        // LABEL FIX: Scale * 120 instead of 100
+        ctx.fillStyle = '#94a3b8';
+        ctx.font = "10px Inter";
+        ctx.textAlign = "right";
+        ctx.fillText(Math.round(r * MAX_SCORE), pad - 10, y + 3);
+    });
+    ctx.stroke();
+
+    // 2. Plotting Logic
+    const plotPoints = points.map((p, i) => {
+        const x = points.length > 1 ? pad + (i * stepX) : W / 2;
+        // Ensure we cap visually at the top line even if score > 120 (rare)
+        const normalizedScore = Math.min(p.score, MAX_SCORE); 
+        const y = pad + chartH - ((normalizedScore / MAX_SCORE) * chartH);
+        return { x, y, data: p };
+    });
+
+    // 3. Draw Deep Work Bars (Background)
+    const maxWork = 6; // 6 hours = max bar height
+    const barW = points.length > 1 ? (chartW / points.length) * 0.4 : 50;
+    
+    plotPoints.forEach(p => {
+        const h = (Math.min(p.data.work, maxWork) / maxWork) * chartH;
+        const y = pad + chartH - h;
+        ctx.fillStyle = 'rgba(59, 130, 246, 0.1)'; 
+        ctx.fillRect(p.x - barW/2, y, barW, h);
+    });
+
+    // 4. Draw Score Line
+    if (points.length > 1) {
         ctx.beginPath();
-        ctx.strokeStyle = '#e2e8f0';
-        ctx.lineWidth = 1;
-        // Y-Axis lines (0, 50, 100)
-        [0, 0.5, 1].forEach(r => {
-            const y = pad + chartH - (r * chartH);
-            ctx.moveTo(pad, y);
-            ctx.lineTo(W - pad, y);
-            ctx.fillStyle = '#94a3b8';
-            ctx.font = "10px Inter";
-            ctx.fillText(Math.round(r*100), 10, y + 3);
+        ctx.strokeStyle = '#3b82f6';
+        ctx.lineWidth = 3;
+        ctx.lineJoin = "round";
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = "rgba(59, 130, 246, 0.4)";
+        plotPoints.forEach((p, i) => {
+            if (i === 0) ctx.moveTo(p.x, p.y);
+            else ctx.lineTo(p.x, p.y);
         });
         ctx.stroke();
-
-        // If Single Data Point: Draw a "Mastery" reference line at 100 to give context to the dot
-        if (points.length === 1) {
-             const y100 = pad + chartH - (1 * chartH); // 100 score line
-             ctx.beginPath();
-             ctx.strokeStyle = 'rgba(16, 185, 129, 0.2)'; // Green tint
-             ctx.setLineDash([5, 5]);
-             ctx.moveTo(pad, y100);
-             ctx.lineTo(W - pad, y100);
-             ctx.stroke();
-             ctx.setLineDash([]); // Reset
-        }
-
-        // 1. Draw Deep Work Bars (Secondary Axis 0-6h)
-        const maxWork = 6; 
-        // Adjust bar width based on count, CAP width for single item
-        const barW = points.length > 1 ? (chartW / points.length) * 0.4 : 50; 
-        
-        points.forEach((p, i) => {
-            // If single point, center it. If multiple, space them out.
-            const x = points.length > 1 ? pad + (i * stepX) : W / 2;
-            const h = (Math.min(p.work, maxWork) / maxWork) * chartH;
-            const y = pad + chartH - h;
-            
-            ctx.fillStyle = 'rgba(59, 130, 246, 0.2)'; 
-            ctx.fillRect(x - barW/2, y, barW, h);
-        });
-
-        // 2. Draw Score Line
-        if (points.length > 1) {
-            ctx.beginPath();
-            ctx.strokeStyle = '#3b82f6';
-            ctx.lineWidth = 3;
-            ctx.shadowBlur = 10;
-            ctx.shadowColor = "rgba(59, 130, 246, 0.4)";
-            points.forEach((p, i) => {
-                const x = pad + (i * stepX);
-                const y = pad + chartH - ((p.score / 120) * chartH); // 120 is max scale for visual room
-                if (i === 0) ctx.moveTo(x, y);
-                else ctx.lineTo(x, y);
-            });
-            ctx.stroke();
-            ctx.shadowBlur = 0;
-        }
-
-        // Points
-        points.forEach((p, i) => {
-            const x = points.length > 1 ? pad + (i * stepX) : W / 2;
-            const y = pad + chartH - ((p.score / 120) * chartH);
-            ctx.beginPath();
-            ctx.fillStyle = '#ffffff';
-            ctx.arc(x, y, 4, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.lineWidth = 2;
-            ctx.strokeStyle = '#3b82f6'; // Ensure stroke color is explicit
-            ctx.stroke();
-            
-            // Labels: Always draw if count < 10, otherwise skip some
-            if(points.length < 10 || i % 2 === 0) {
-                ctx.fillStyle = '#64748b';
-                ctx.textAlign = "center";
-                ctx.fillText(p.date, x, H - 10);
-            }
-        });
+        ctx.shadowBlur = 0; // Reset shadow
     }
+
+    // 5. Draw Points
+    plotPoints.forEach((p, i) => {
+        ctx.beginPath();
+        ctx.fillStyle = '#ffffff';
+        ctx.arc(p.x, p.y, 5, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = '#3b82f6';
+        ctx.stroke();
+        
+        // Date Labels on X-Axis
+        if(points.length < 12 || i % 2 === 0) {
+            ctx.fillStyle = '#64748b';
+            ctx.textAlign = "center";
+            ctx.font = "10px Inter";
+            // CHANGED: Moved from H-15 to H-25 to lift it up
+            ctx.fillText(p.data.date, p.x, H - 25); 
+        }
+    });
+
+    // --- INTERACTIVITY: CLICK HANDLER ---
+    canvas.onclick = function(e) {
+        // Get Click Coordinates
+        const rect = canvas.getBoundingClientRect();
+        const mouseX = e.clientX - rect.left;
+        const mouseY = e.clientY - rect.top;
+
+        // Find nearest point
+        const hitRange = 20; // Distance in pixels
+        const clickedPoint = plotPoints.find(p => {
+            const dx = mouseX - p.x;
+            const dy = mouseY - p.y;
+            return Math.sqrt(dx*dx + dy*dy) < hitRange;
+        });
+
+        // Redraw chart clean (removes old tooltips)
+        // We use the saved data from the start of the function
+        drawTrendChart(canvas.lastData);
+
+        if(clickedPoint) {
+            // Draw Tooltip
+            const p = clickedPoint;
+            const tipW = 120;
+            const tipH = 60;
+            let tipX = p.x - tipW/2;
+            let tipY = p.y - tipH - 15;
+
+            // Prevent going off edges
+            if(tipX < 10) tipX = 10;
+            if(tipX + tipW > W) tipX = W - tipW - 10;
+            if(tipY < 10) tipY = p.y + 20; // Flip down if too high
+
+            // Bubble Background
+            ctx.fillStyle = 'rgba(15, 23, 42, 0.9)';
+            ctx.beginPath();
+            ctx.roundRect(tipX, tipY, tipW, tipH, 8);
+            ctx.fill();
+            ctx.strokeStyle = 'rgba(255,255,255,0.1)';
+            ctx.lineWidth = 1;
+            ctx.stroke();
+
+            // Text
+            ctx.textAlign = "left";
+            ctx.fillStyle = '#e2e8f0';
+            ctx.font = "bold 11px Inter";
+            ctx.fillText(`📅 ${p.data.fullDate}`, tipX + 10, tipY + 20);
+            
+            ctx.fillStyle = '#3b82f6';
+            ctx.fillText(`🏆 Score: ${p.data.score}`, tipX + 10, tipY + 35);
+            
+            ctx.fillStyle = '#94a3b8';
+            ctx.font = "10px Inter";
+            ctx.fillText(`⏱ Work: ${p.data.work}h`, tipX + 10, tipY + 50);
+        }
+    };
+}
 
     function drawRadarChart(dataList) {
     const canvas = document.getElementById('radarCanvas');
@@ -2915,4 +2969,3 @@ function renderMiniHeatmap() {
 </script>
 </body>
 </html>
-
