@@ -941,7 +941,7 @@
             <span id="thesisPercent">0%</span>
         </div>
         <input type="range" id="thesisProgress" min="0" max="100" value="0" oninput="updateLongTerm('thesis', this.value)" style="width:100%; margin-bottom: 8px;">
-        <input type="text" id="thesisNextStep" placeholder="👉 Next: e.g., Run mesh generation..." onchange="saveLongTermText('thesisStep', this.value)" 
+        <input type="text" id="thesisNextStep" placeholder="👉" onchange="saveLongTermText('thesisStep', this.value)" 
         style="width: 100%; padding: 6px; font-size: 11px; border: 1px solid var(--border); border-radius: 6px;">
     </div>
 
@@ -951,7 +951,7 @@
             <span id="hecPercent">Day 0</span>
         </div>
         <input type="range" id="hecProgress" min="0" max="100" value="0" oninput="updateLongTerm('hec', this.value)" style="width:100%; margin-bottom: 8px;">
-        <input type="text" id="hecTopic" placeholder="👉 Today's Topic: e.g., Unsteady Flow..." onchange="saveLongTermText('hecTopic', this.value)" 
+        <input type="text" id="hecTopic" placeholder="👉" onchange="saveLongTermText('hecTopic', this.value)" 
         style="width: 100%; padding: 6px; font-size: 11px; border: 1px solid var(--border); border-radius: 6px;">
     </div>
 </div>
@@ -986,8 +986,8 @@
                     <span class="rating-display"><span id="wakeScore">0</span> pts</span>
                 </div>
                 <div class="input-group">
-                    <label>Meditation/Exercise:</label>
-                    <input type="number" id="meditationTime" placeholder="Minutes" oninput="calculateAll()">
+                    <label>Meditation(Minutes):</label>
+                    <input type="number" id="meditationTime" placeholder="" oninput="calculateAll()">
                     <span class="rating-display"><span id="meditationScore">0</span> / 15</span>
                 </div>
                 <div class="input-group">
@@ -1012,26 +1012,26 @@
             </div>
 
             <div class="tracker-section">
-                <div class="section-title">🧠 Deep Work Sessions</div>
-                <div class="input-group">
-                    <label style="color:var(--accent);">I. Skill/Literature:</label>
-                    <input type="number" id="s1_time" placeholder="Mins (Target 120)" oninput="calculateAll()" style="width: 100px;">
-                    <input type="number" id="s1_acc" placeholder="Done %" oninput="calculateAll()" style="width: 100px;">
-                    <span class="rating-display"><span id="s1_score">0</span> / 30</span>
-                </div>
-                <div class="input-group">
-                    <label>II. Skill Development:</label>
-                    <input type="number" id="s2_time" placeholder="Mins (Target 120)" oninput="calculateAll()" style="width: 100px;">
-                    <input type="number" id="s2_acc" placeholder="Done %" oninput="calculateAll()" style="width: 100px;">
-                    <span class="rating-display"><span id="s2_score">0</span> / 30</span>
-                </div>
-                <div class="input-group">
-                    <label>III. Python/ML:</label>
-                    <input type="number" id="s3_time" placeholder="Mins (Target 90)" oninput="calculateAll()" style="width: 100px;">
-                    <input type="number" id="s3_acc" placeholder="Done %" oninput="calculateAll()" style="width: 100px;">
-                    <span class="rating-display"><span id="s3_score">0</span> / 30</span>
-                </div>
-            </div>
+    <div class="section-title">🧠 Deep Work Sessions</div>
+    <div class="input-group">
+        <label style="color:var(--accent);">I. Skill/Literature:</label>
+        <input type="number" id="s1_time" oninput="calculateAll()" style="width: 100px;">
+        <input type="number" id="s1_acc" oninput="calculateAll()" style="width: 100px;">
+        <span class="rating-display"><span id="s1_score">0</span> / 30</span>
+    </div>
+    <div class="input-group">
+        <label>II. Skill Development:</label>
+        <input type="number" id="s2_time" oninput="calculateAll()" style="width: 100px;">
+        <input type="number" id="s2_acc" oninput="calculateAll()" style="width: 100px;">
+        <span class="rating-display"><span id="s2_score">0</span> / 30</span>
+    </div>
+    <div class="input-group">
+        <label>III. Python/ML:</label>
+        <input type="number" id="s3_time" oninput="calculateAll()" style="width: 100px;">
+        <input type="number" id="s3_acc" oninput="calculateAll()" style="width: 100px;">
+        <span class="rating-display"><span id="s3_score">0</span> / 30</span>
+    </div>
+</div>
 
 
             <div class="tracker-section">
@@ -1062,12 +1062,12 @@
                 </div>
                 <div class="input-group">
                     <label>Screen Time (Hrs):</label>
-                    <input type="number" id="screenHours" step="0.1" placeholder="Hours" oninput="calculateAll()">
+                    <input type="number" id="screenHours" step="0.1" placeholder="" oninput="calculateAll()">
                     <span class="rating-display"><span id="screenScore">25</span> / 25</span>
                 </div>
                 <div class="input-group">
                     <label>Research (Bonus):</label>
-                    <input type="number" id="researchN" placeholder="Items Read" oninput="calculateAll()">
+                    <input type="number" id="researchN" placeholder="" oninput="calculateAll()">
                     <span class="rating-display" style="color: var(--success); border-color: var(--success);">+<span id="researchScore">0</span></span>
                 </div>
             </div>
@@ -1106,7 +1106,7 @@
                 <div class="section-title">🔬 Protocol Observations</div>
                 <div class="input-group">
                     <label>Day Tags:</label>
-                    <input type="text" id="dayTags" placeholder="#Sick #Exam #Productive">
+                    <input type="text" id="dayTags" placeholder="">
                 </div>
                 <div class="input-group">
                     <label>Interruptions</label>
@@ -1125,11 +1125,11 @@
                 </div>
                 <div class="input-group">
                     <label style="color: var(--success);">🏆 Top Win:</label>
-                    <input type="text" id="topWin" placeholder="Accomplishment...">
+                    <input type="text" id="topWin" placeholder="">
                 </div>
                 <div class="input-group">
                     <label style="color: var(--danger);">🚧 Main Obstacle:</label>
-                    <input type="text" id="mainObstacle" placeholder="Blocker...">
+                    <input type="text" id="mainObstacle" placeholder="">
                 </div>
             </div>
 
