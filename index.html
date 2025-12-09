@@ -913,6 +913,45 @@
         
         #confettiCanvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; }
         @media (prefers-color-scheme: dark) { }
+        /* 1. Stat Card Watermark Icons */
+.stat-icon {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    width: 32px;       /* Bigger than before */
+    height: 32px;
+    opacity: 0.15;     /* Subtle watermark effect */
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.stat-icon svg {
+    width: 100%;
+    height: 100%;
+    fill: currentColor;
+}
+
+/* 2. Action Button Icons */
+.btn-icon svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+.btn-icon:hover svg { opacity: 1; }
+
+/* 3. Insight Icon */
+.insight-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    color: var(--special);
+}
+.insight-icon svg { width: 100%; height: 100%; fill: currentColor; }
     </style>
 </head>
 <body>
@@ -923,7 +962,7 @@
     <header>
         <div>
             <h1>Daily Tracker v3.12</h1>
-            <h2>Bibek Subedi | Final Year Civil Engineering Studnet </h2>
+            <h2>Bibek Subedi | Final Year Civil Engineering Student </h2>
             <div id="quoteDisplay" class="quote-box">Loading Wisdom...</div>
         </div>
         <div class="time-panel">
@@ -949,11 +988,11 @@
     
     <div style="margin-bottom: 15px; background: var(--bg); padding: 10px; border-radius: 10px;">
         <div style="display: flex; justify-content: space-between; font-size: 12px; font-weight: 700; margin-bottom: 5px;">
-            <span>HAND/PLAXIS Completition</span>
+            <span>HAND/PLAXIS Completion</span>
             <span id="thesisPercent">0%</span>
         </div>
         <input type="range" id="thesisProgress" min="0" max="100" value="0" oninput="updateLongTerm('thesis', this.value)" style="width:100%; margin-bottom: 8px;">
-        <input type="text" id="thesisNextStep" placeholder="👉" onchange="saveLongTermText('thesisStep', this.value)" 
+        <input type="text" id="thesisNextStep" placeholder="" onchange="saveLongTermText('thesisStep', this.value)" 
         style="width: 100%; padding: 6px; font-size: 11px; border: 1px solid var(--border); border-radius: 6px;">
     </div>
 
@@ -963,7 +1002,7 @@
             <span id="hecPercent">Day 0</span>
         </div>
         <input type="range" id="hecProgress" min="0" max="100" value="0" oninput="updateLongTerm('hec', this.value)" style="width:100%; margin-bottom: 8px;">
-        <input type="text" id="hecTopic" placeholder="👉" onchange="saveLongTermText('hecTopic', this.value)" 
+        <input type="text" id="hecTopic" placeholder="" onchange="saveLongTermText('hecTopic', this.value)" 
         style="width: 100%; padding: 6px; font-size: 11px; border: 1px solid var(--border); border-radius: 6px;">
     </div>
 </div>
@@ -991,7 +1030,7 @@
             </div>
 
             <div class="tracker-section">
-                <div class="section-title">🌅 Morning Protocol</div>
+                <div class="section-title"> Morning Protocol</div>
                 <div class="input-group">
                     <label>Wake Up Time:</label>
                     <input type="time" id="wakeTime" onchange="calculateAll()">
@@ -1019,12 +1058,12 @@
                     <div style="flex-grow: 1; padding: 0 10px;">
                         <input type="range" id="energyLevel" min="1" max="10" value="7" oninput="document.getElementById('energyDisp').innerText = this.value;">
                     </div>
-                    <span class="rating-display">⚡ <span id="energyDisp">7</span></span>
+                    <span class="rating-display"> <span id="energyDisp">7</span></span>
                 </div>
             </div>
 
             <div class="tracker-section">
-    <div class="section-title">🧠 Deep Work Sessions</div>
+    <div class="section-title"> Deep Work Sessions</div>
 
     <div style="display: flex; gap: 15px; margin-bottom: 8px; align-items: center;">
         <div style="min-width: 140px;"></div> 
@@ -1059,7 +1098,7 @@
 
 
             <div class="tracker-section">
-                <div class="section-title">🔋 Biology & Lifestyle</div>
+                <div class="section-title"> Biology & Lifestyle</div>
                 <div class="input-group">
                     <label>Fuel (Diet):</label>
                     <div style="flex-grow: 1; padding: 0 10px;">
@@ -1072,7 +1111,7 @@
                     <div style="flex-grow: 1; padding: 0 10px;">
                         <input type="range" id="waterIntake" min="0" max="5" step="0.5" value="2.5" oninput="document.getElementById('waterDisp').innerText = this.value; calculateAll();" style="width:28.6%">
                     </div>
-                    <span class="rating-display">💧 <span id="waterDisp">2.5</span> L</span>
+                    <span class="rating-display"> <span id="waterDisp">2.5</span> L</span>
                     <span class="rating-display" style="background:transparent; color: var(--success); border:none;">+<span id="waterScore">0</span></span>
                 </div>
                 <div class="input-group">
@@ -1118,7 +1157,7 @@
             </div>
 
             <div class="tracker-section">
-                <div class="section-title">😴 Sleep Hygiene</div>
+                <div class="section-title"> Sleep Hygiene</div>
                 <div class="input-group">
                     <label>In Bed By:</label>
                     <input type="time" id="bedTime" onchange="calculateAll()">
@@ -1127,7 +1166,7 @@
             </div>
 
             <div class="tracker-section">
-                <div class="section-title">🔬 Protocol Observations</div>
+                <div class="section-title"> Protocol Observations</div>
                 <div class="input-group">
                     <label>Day Tags:</label>
                     <input type="text" id="dayTags" placeholder="">
@@ -1135,24 +1174,24 @@
                 <div class="input-group">
                     <label>Interruptions</label>
                     <input type="range" id="flowState" min="1" max="10" value="5" oninput="document.getElementById('flowDisp').innerText = this.value;" style="width:17.8%">
-                    <span class="rating-display">🚧<span id="flowDisp">5</span></span>
+                    <span class="rating-display"><span id="flowDisp">5</span></span>
                 </div>
                 <div class="input-group">
                     <label>Brain Clarity:</label>
                     <select id="moodSelect">
-                        <option value="5">⚡ Laser Sharp (Peak)</option>
-                        <option value="4">🧠 Clear / Good</option>
+                        <option value="5"> Laser Sharp (Peak)</option>
+                        <option value="4"> Clear / Good</option>
                         <option value="3">🌫️ Mild Fog / Slow</option>
-                        <option value="2">📉 Fried / Exhausted</option>
-                        <option value="1">🤕 Sick / Migraine</option>
+                        <option value="2"> Fried / Exhausted</option>
+                        <option value="1"> Sick / Migraine</option>
                     </select>
                 </div>
                 <div class="input-group">
-                    <label style="color: var(--success);">🏆 Top Win:</label>
+                    <label style="color: var(--success);"> Top Win:</label>
                     <input type="text" id="topWin" placeholder="">
                 </div>
                 <div class="input-group">
-                    <label style="color: var(--danger);">🚧 Main Obstacle:</label>
+                    <label style="color: var(--danger);"> Main Obstacle:</label>
                     <input type="text" id="mainObstacle" placeholder="">
                 </div>
             </div>
@@ -1197,8 +1236,8 @@
 </div>
 
             <div class="action-bar">
-                <button type="button" class="btn btn-save" onclick="saveData()">💾 Save & Sync</button>
-                <button type="button" class="btn btn-clear" onclick="resetForm()">🔄 Reset</button>
+                <button type="button" class="btn btn-save" onclick="saveData()"> Save & Sync</button>
+                <button type="button" class="btn btn-clear" onclick="resetForm()"> Reset</button>
             </div>
         </form>
     </div>
@@ -1210,23 +1249,23 @@
             <div class="focus-bg-glow"></div>
             <div class="focus-content">
                 <div class="section-title" style="color: var(--focus-accent); justify-content: center; border: none; font-size: 16px;">
-                    ⚡ DEEP WORK PROTOCOL
+                     DEEP WORK PROTOCOL
                 </div>
                 <div class="timer-wrapper">
                     <div id="timerDisplay">00:00</div>
                     <div class="timer-status-text" id="timerStatus">Ready to Engage</div>
                 </div>
                 <select id="timerTarget" class="focus-target-select">
-                    <option value="s1_time">🎯 Session I: Thesis/Plaxis</option>
+                    <option value="s1_time"> Session I: Thesis/Plaxis</option>
                     <option value="s2_time">🛠️ Session II: Skill Dev</option>
-                    <option value="s3_time">🐍 Session III: Python/ML</option>
+                    <option value="s3_time"> Session III: Python/ML</option>
                 </select>
                 <div class="focus-controls">
     <button type="button" class="btn-focus stop" onclick="stopTimer()" title="Log & Finish">◼</button>
     
     <button type="button" id="timerToggleBtn" class="btn-focus start" onclick="toggleTimer()" title="Start/Pause">▶</button>
     
-    <button type="button" id="noiseBtn" class="btn-focus" onclick="toggleBrownNoise()" title="Toggle Focus Audio" style="width: auto; padding: 0 15px; border-radius: 30px; font-size: 12px; font-weight: 700;">🔇 Audio</button>
+    <button type="button" id="noiseBtn" class="btn-focus" onclick="toggleBrownNoise()" title="Toggle Focus Audio" style="width: auto; padding: 0 15px; border-radius: 30px; font-size: 12px; font-weight: 700;"> Audio</button>
 </div>
                 <button class="zen-toggle-btn" onclick="toggleZenMode()">⛶ Enter Zen Mode</button>
             </div>
@@ -1236,40 +1275,62 @@
     <!-- UPDATED HISTORY TAB (v3.12) -->
     <div id="historyView">
         <div class="history-header">
-            <div class="section-title" style="margin: 0; border: none;">📊 Analytical Command Center</div>
-            <div class="history-actions">
-                <button class="btn-icon" title="Import JSON" onclick="importJSON()">📥</button>
-                <button class="btn-icon" title="Export Excel" onclick="exportToExcel()">📊</button>
-                <button class="btn-icon" title="Export JSON" onclick="exportJSON()">📤</button>
-                <button class="btn-icon" title="Wipe Data" style="color:var(--danger); border-color:var(--danger);" onclick="clearHistory()">🗑️</button>
-            </div>
+            <div class="section-title" style="margin: 0; border: none;"> Analytical Command Center</div>
+          <div class="history-actions">
+    <button class="btn-icon" title="Import JSON" onclick="importJSON()">
+        <svg viewBox="0 0 24 24"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"/></svg>
+    </button>
+    
+    <button class="btn-icon" title="Export Excel" onclick="exportToExcel()">
+        <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>
+    </button>
+    
+    <button class="btn-icon" title="Export JSON" onclick="exportJSON()">
+        <svg viewBox="0 0 24 24"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z" transform="rotate(180 12 12)"/></svg>
+    </button>
+    
+    <button class="btn-icon" title="Wipe Data" style="color:var(--danger); border-color:var(--danger);" onclick="clearHistory()">
+        <svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+    </button>
+</div>
         </div>
 
         <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-icon">📈</div>
-                <div class="stat-val" id="wkAvgScore">0</div>
-                <div class="stat-lbl">7-Day Avg Score</div>
-                <span class="stat-trend" id="trendScore">--</span>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon">🧠</div>
-                <div class="stat-val" id="wkTotalDeep">0</div>
-                <div class="stat-lbl">Deep Work Hours</div>
-                <span class="stat-trend" id="trendWork">--</span>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon">😴</div>
-                <div class="stat-val" id="wkAvgSleep">0</div>
-                <div class="stat-lbl">Avg Sleep Score</div>
-                <span class="stat-trend" id="trendSleep">--</span>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon">🔥</div>
-                <div class="stat-val" id="wkBestDay">--</div>
-                <div class="stat-lbl">Best Streak Day</div>
-            </div>
+    <div class="stat-card">
+        <div class="stat-icon">
+            <svg viewBox="0 0 24 24"><path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/></svg>
         </div>
+        <div class="stat-val" id="wkAvgScore">0</div>
+        <div class="stat-lbl">7-Day Avg Score</div>
+        <span class="stat-trend" id="trendScore">--</span>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-icon">
+            <svg viewBox="0 0 24 24"><path d="M7 2v11h3v9l7-12h-4l4-8z"/></svg>
+        </div>
+        <div class="stat-val" id="wkTotalDeep">0</div>
+        <div class="stat-lbl">Deep Work Hours</div>
+        <span class="stat-trend" id="trendWork">--</span>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-icon">
+            <svg viewBox="0 0 24 24"><path d="M9 2c-1.05 0-2.05.16-3 .46 2.71 1.63 4.5 4.6 4.5 7.96 0 3.36-1.79 6.33-4.5 7.96.95.3 1.95.46 3 .46 5.52 0 10-4.48 10-10S14.52 2 9 2z"/></svg>
+        </div>
+        <div class="stat-val" id="wkAvgSleep">0</div>
+        <div class="stat-lbl">Avg Sleep Score</div>
+        <span class="stat-trend" id="trendSleep">--</span>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-icon">
+            <svg viewBox="0 0 24 24"><path d="M13.5.67s.74 2.65.74 4.8c0 2.06-1.35 3.73-3.41 3.73-2.07 0-3.63-1.67-3.63-3.73l.03-.36C5.21 7.51 4 10.62 4 14c0 4.42 3.58 8 8 8s8-3.58 8-8C20 8.61 17.41 3.8 13.5.67zM11.71 19c-1.78 0-3.22-1.4-3.22-3.14 0-1.62 1.05-2.76 2.81-3.12 1.77-.36 3.6-1.21 4.62-2.58.39 1.29.59 2.65.59 4.04 0 2.65-2.15 4.8-4.8 4.8z"/></svg>
+        </div>
+        <div class="stat-val" id="wkBestDay">--</div>
+        <div class="stat-lbl">Best Streak Day</div>
+    </div>
+</div>
 
         <!-- Advanced Analytics Grid -->
         <div class="analytics-grid">
@@ -1294,7 +1355,7 @@
             </div>
             <div class="chart-box" style="grid-column: 1 / -1; height: 380px;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-        <h3>🧪 Correlation Lab <span style="font-size:10px; opacity:0.6;">(Linear Regression)</span></h3>
+        <h3> Correlation Lab <span style="font-size:10px; opacity:0.6;">(Linear Regression)</span></h3>
         <div style="display: flex; gap: 10px;">
             <select id="corrX" onchange="drawCorrelationChart()" class="focus-target-select" style="padding: 4px 8px; font-size: 11px; margin: 0; background: var(--bg); color: var(--text);">
                 <option value="sleep">X: Sleep Score</option>
@@ -1317,9 +1378,11 @@
 
         <!-- Automated Insight -->
         <div class="insight-box">
-            <div class="insight-icon">💡</div>
-            <div id="aiInsightText">Insufficient data to generate correlations. Log at least 2 days of data.</div>
-        </div>
+    <div class="insight-icon">
+        <svg viewBox="0 0 24 24"><path d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1zm3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7zm2.85 11.1l-.85.6V16h-4v-2.3l-.85-.6A4.997 4.997 0 0 1 7 9c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.63-.8 3.16-2.15 4.1z"/></svg>
+    </div>
+    <div id="aiInsightText">Insufficient data to generate correlations. Log at least 2 days of data.</div>
+</div>
 
         <div class="table-container">
             <div style="overflow-x: auto;">
@@ -2002,10 +2065,10 @@ function saveLongTermText(key, val) {
             ctx.textAlign = "left";
             ctx.fillStyle = '#e2e8f0';
             ctx.font = "bold 11px Inter";
-            ctx.fillText(`📅 ${p.data.fullDate}`, tipX + 10, tipY + 20);
+            ctx.fillText(` ${p.data.fullDate}`, tipX + 10, tipY + 20);
             
             ctx.fillStyle = '#3b82f6';
-            ctx.fillText(`🏆 Score: ${p.data.score}`, tipX + 10, tipY + 35);
+            ctx.fillText(` Score: ${p.data.score}`, tipX + 10, tipY + 35);
             
             ctx.fillStyle = '#94a3b8';
             ctx.font = "10px Inter";
@@ -2603,12 +2666,12 @@ function renderMiniHeatmap() {
         localStorage.setItem(recordId, JSON.stringify(data));
 
         // 4. Feedback
-        if(total >= 100) { triggerConfetti(); alert("GOD MODE ACHIEVED! 🏆"); } 
+        if(total >= 100) { triggerConfetti(); alert("GOD MODE ACHIEVED! "); } 
         else { 
             // Subtle notification instead of alert
             const saveBtn = document.querySelector('.btn-save');
             const originalText = saveBtn.innerText;
-            saveBtn.innerText = "✅ Saved!";
+            saveBtn.innerText = " Saved!";
             setTimeout(() => saveBtn.innerText = originalText, 1000);
         }
 
@@ -2766,7 +2829,7 @@ function renderMiniHeatmap() {
                 <td>${statusBadge}</td>
                 <td>${obstacle}</td>
                 <td class="action-cell">
-                    <button class="table-btn" onclick="loadRecord('${id}')" title="Load">📂</button>
+                    <button class="table-btn" onclick="loadRecord('${id}')" title="Load"></button>
                     <button class="table-btn" onclick="deleteRecord('${id}')" title="Delete" style="color:var(--danger)">🗑️</button>
                 </td>
             `;
@@ -2799,7 +2862,7 @@ function renderMiniHeatmap() {
                 else break;
             }
         }
-        document.getElementById('streakCount').innerText = streak + " 🔥";
+        document.getElementById('streakCount').innerText = streak + " ";
     }
 
     function updateCurrentActivity() {
@@ -3054,7 +3117,7 @@ function renderMiniHeatmap() {
     }
 
     window.clearHistory = function() {
-        if(confirm("🔥 RESET EVERYTHING?")) {
+        if(confirm(" RESET EVERYTHING?")) {
             localStorage.clear();
             location.reload();
         }
@@ -3067,7 +3130,7 @@ function renderMiniHeatmap() {
         if (isNoisePlaying) {
             if (audioCtx) audioCtx.close();
             isNoisePlaying = false;
-            btn.innerHTML = "🔇 Audio";
+            btn.innerHTML = " Audio";
             btn.style.background = "rgba(255,255,255,0.1)";
             btn.style.color = "white";
         } else {
@@ -3093,7 +3156,7 @@ function renderMiniHeatmap() {
             brownNoise.connect(gainNode);
             gainNode.connect(audioCtx.destination);
             isNoisePlaying = true;
-            btn.innerHTML = "🔊 ON";
+            btn.innerHTML = " ON";
             btn.style.background = "#10b981";
         }
     }
