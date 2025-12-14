@@ -1496,50 +1496,34 @@ details[open] .flow-summary { border-color: #3b82f6; background: #eff6ff; border
             </div>
         </div>
     </div>
-<<div id="yogaView" style="display:none; animation: fadeIn 0.4s ease;">
+<div id="yogaView" style="display:none; animation: fadeIn 0.4s ease;">
     
-    <div class="audio-card" style="flex-direction: column; align-items: stretch;">
-        <div style="display:flex; align-items:center; gap:15px; margin-bottom:15px;">
-            <div style="width: 50px; height: 50px; background: #eff6ff; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #3b82f6;">
-                <svg style="width:24px;height:24px;fill:currentColor" viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
-            </div>
-            <div>
-                <div style="font-size: 10px; font-weight: 700; color: #64748b; letter-spacing: 1px; text-transform: uppercase;">Healing Frequency</div>
-                <div style="font-weight: 700; color: #1e293b; font-size: 14px;">Vishuddha (Thyroid) Chakra</div>
-            </div>
+    <div class="audio-card">
+        <div style="width: 50px; height: 50px; background: #eff6ff; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #3b82f6;">
+            <svg style="width:24px;height:24px;fill:currentColor" viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
         </div>
-
-        <div class="audio-controller" id="audioController">
-            <button class="audio-btn btn-play-audio" onclick="playAudio()">
-                <svg viewBox="0 0 24 24" style="width:24px;height:24px;fill:currentColor; margin-left:2px;"><path d="M8 5v14l11-7z"/></svg>
-            </button>
-            
-            <button class="audio-btn btn-pause-audio" onclick="pauseAudio()">
-                <svg viewBox="0 0 24 24" style="width:24px;height:24px;fill:currentColor;"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
-            </button>
-
-            <div class="audio-status">
-                <div style="display:flex; justify-content:space-between;">
-                    <span id="audioStatusText">Ready to Start</span>
-                    <div class="eq-bars">
-                        <div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div>
-                    </div>
-                </div>
-                <div class="audio-bar-bg">
-                    <div class="audio-bar-fill" id="audioProgress"></div>
-                </div>
-            </div>
+        <div style="flex-grow: 1;">
+            <div style="font-size: 10px; font-weight: 700; color: #64748b; letter-spacing: 1px; text-transform: uppercase;">Background Frequency</div>
+            <div style="font-weight: 700; color: #1e293b; font-size: 14px;">Thyroid Healing (Vishuddha)</div>
         </div>
-
-        <div id="hiddenPlayer" style="width: 1px; height: 1px; overflow: hidden; opacity: 0; pointer-events: none; position: absolute;"></div>
+        <div style="width: 200px; height: 60px; overflow: hidden; border-radius: 30px;">
+            <iframe width="100%" height="60" 
+                src="https://www.youtube.com/embed/L_LSn_G6JUQ?controls=1&modestbranding=1&fs=0&color=white" 
+                title="Audio" 
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+            </iframe>
+        </div>
     </div>
 
     <div class="tracker-section" style="margin-top: 0;">
         <div class="section-title" style="margin-bottom: 20px;">
             <span>🧘‍♂️ The Sequence (40 Min)</span>
+            <span style="font-size: 10px; opacity: 0.6; font-weight: 500;">Click steps to expand details</span>
         </div>
 
         <div class="timeline-container">
+
             <div style="font-size: 11px; font-weight: 800; color: #94a3b8; margin: 15px 0 10px 0; letter-spacing: 1px;">PHASE I: PHYSICAL & EYES (4 MIN)</div>
 
             <details class="flow-step">
@@ -1576,7 +1560,7 @@ details[open] .flow-summary { border-color: #3b82f6; background: #eff6ff; border
                     <span style="font-size: 11px; font-weight: 700; background: #dcfce7; padding: 4px 8px; border-radius: 6px; color: #166534;">2 Mins</span>
                 </summary>
                 <div class="flow-details">
-                    <strong>Skull Shining Breath:</strong> Sit straight. Deep inhale. Forceful exhale pulling navel in. Passive inhale.<br>
+                    <strong>Skull Shining Breath:</strong> Sit straight. Take a deep inhale. Exhale forcefully through nose while pulling navel in. Inhalation happens passively.<br>
                     <strong>Benefit:</strong> Detoxifies body, balances energy, stimulates metabolism.
                 </div>
             </details>
@@ -1600,7 +1584,7 @@ details[open] .flow-summary { border-color: #3b82f6; background: #eff6ff; border
                     <span style="font-size: 11px; font-weight: 700; background: #dcfce7; padding: 4px 8px; border-radius: 6px; color: #166534;">3 Mins</span>
                 </summary>
                 <div class="flow-details">
-                    <strong>Ocean Breath:</strong> Constrict the back of throat slightly to create a whispering sound on inhale/exhale.<br>
+                    <strong>Ocean Breath:</strong> Constrict the back of your throat slightly to create a whispering sound on inhale and exhale.<br>
                     <strong>Benefit:</strong> The vibration directly massages the thyroid gland.
                 </div>
             </details>
@@ -1612,7 +1596,7 @@ details[open] .flow-summary { border-color: #3b82f6; background: #eff6ff; border
                     <span style="font-size: 11px; font-weight: 700; background: #dcfce7; padding: 4px 8px; border-radius: 6px; color: #166534;">2 Mins</span>
                 </summary>
                 <div class="flow-details">
-                    <strong>How:</strong> Close ears with thumbs. Inhale deep, exhale while making a humming bee sound.<br>
+                    <strong>How:</strong> Close ears with thumbs, index fingers on forehead. Inhale deep, exhale while making a humming bee sound.<br>
                     <strong>Benefit:</strong> Soothes nervous system via vibration.
                 </div>
             </details>
@@ -1638,7 +1622,7 @@ details[open] .flow-summary { border-color: #3b82f6; background: #eff6ff; border
                     <span style="font-size: 11px; font-weight: 700; background: #ede9fe; padding: 4px 8px; border-radius: 6px; color: #5b21b6;">6 Mins</span>
                 </summary>
                 <div class="flow-details">
-                    <strong>Technique:</strong> Close eyes. Visualize a bright <strong style="color:#3b82f6">BLUE LIGHT</strong> at the throat center.<br>
+                    <strong>Technique:</strong> Close eyes. Focus on breath. Visualize a bright <strong style="color:#3b82f6">BLUE LIGHT</strong> at the throat center, healing the gland.<br>
                     <strong>Note:</strong> Let the audio guide you.
                 </div>
             </details>
@@ -1650,9 +1634,11 @@ details[open] .flow-summary { border-color: #3b82f6; background: #eff6ff; border
                     <span style="font-size: 11px; font-weight: 700; background: #ede9fe; padding: 4px 8px; border-radius: 6px; color: #5b21b6;">16 Mins</span>
                 </summary>
                 <div class="flow-details">
-                    <strong>Savasana:</strong> Lie down flat. Let go of all tension.
+                    <strong>Savasana:</strong> Lie down flat. Let go of all tension. Allow the effects of the practice to settle into the cells.<br>
+                    <strong>Benefit:</strong> Essential for reducing stress hormones (Cortisol) that disrupt thyroid function.
                 </div>
             </details>
+
         </div>
     </div>
 </div>
@@ -3683,77 +3669,6 @@ function renderCorrelationMatrix() {
     html += '</tbody></table>';
     container.innerHTML = html;
 }
-</script>
-<script src="https://www.youtube.com/iframe_api"></script>
-<script>
-    // --- YOUTUBE AUDIO CONTROLLER ---
-    var ytPlayer;
-    var audioTimer;
-
-    // 1. Initialize API
-    function onYouTubeIframeAPIReady() {
-        ytPlayer = new YT.Player('hiddenPlayer', {
-            height: '1',
-            width: '1',
-            videoId: 'L_LSn_G6JUQ', // Your Video ID
-            playerVars: { 
-                'playsinline': 1, 
-                'controls': 0,
-                'disablekb': 1 
-            },
-            events: {
-                'onStateChange': onPlayerStateChange
-            }
-        });
-    }
-
-    // 2. Control Functions
-    function playAudio() {
-        if(ytPlayer && ytPlayer.playVideo) {
-            ytPlayer.playVideo();
-            document.querySelector('.btn-play-audio').style.display = 'none';
-            document.querySelector('.btn-pause-audio').style.display = 'flex';
-            document.getElementById('audioController').classList.add('active-audio');
-            document.getElementById('audioStatusText').innerText = "Playing Frequency...";
-        }
-    }
-
-    function pauseAudio() {
-        if(ytPlayer && ytPlayer.pauseVideo) {
-            ytPlayer.pauseVideo();
-            document.querySelector('.btn-play-audio').style.display = 'flex';
-            document.querySelector('.btn-pause-audio').style.display = 'none';
-            document.getElementById('audioController').classList.remove('active-audio');
-            document.getElementById('audioStatusText').innerText = "Paused";
-        }
-    }
-
-    // 3. Status Monitor (Progress Bar)
-    function onPlayerStateChange(event) {
-        if (event.data == YT.PlayerState.PLAYING) {
-            startAudioTimer();
-        } else {
-            stopAudioTimer();
-        }
-    }
-
-    function startAudioTimer() {
-        stopAudioTimer();
-        audioTimer = setInterval(() => {
-            if(ytPlayer && ytPlayer.getCurrentTime) {
-                const current = ytPlayer.getCurrentTime();
-                const duration = ytPlayer.getDuration();
-                if(duration > 0) {
-                    const pct = (current / duration) * 100;
-                    document.getElementById('audioProgress').style.width = pct + "%";
-                }
-            }
-        }, 1000);
-    }
-
-    function stopAudioTimer() {
-        clearInterval(audioTimer);
-    }
 </script>
 </body>
 </html>
