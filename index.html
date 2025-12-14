@@ -1017,6 +1017,166 @@
 .c-neu      { background: transparent; color: var(--text-light); opacity: 0.5; } /* -0.3 to +0.3 */
 .c-neg-mid  { background: rgba(239, 68, 68, 0.15); color: #7f1d1d; } /* -0.3 to -0.7 */
 .c-neg-high { background: rgba(239, 68, 68, 0.3); color: #7f1d1d; } /* -0.7 to -1.0 */
+/* --- NEW YOGA TAB STYLES --- */
+.audio-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 15px;
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.15);
+    border: 1px solid #e2e8f0;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.timeline-container {
+    position: relative;
+    padding-left: 20px;
+}
+
+.timeline-container::before {
+    content: '';
+    position: absolute;
+    left: 4px;
+    top: 10px;
+    bottom: 10px;
+    width: 2px;
+    background: #e2e8f0;
+}
+
+.flow-step {
+    margin-bottom: 15px;
+    position: relative;
+}
+
+/* The Clickable Header */
+.flow-summary {
+    list-style: none; /* Hide default triangle */
+    background: #ffffff;
+    padding: 15px;
+    border-radius: 12px;
+    border: 1px solid #f1f5f9;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.flow-summary::-webkit-details-marker { display: none; } /* Chrome hide marker */
+
+.flow-summary:hover {
+    transform: translateX(5px);
+    border-color: #3b82f6;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1);
+}
+
+/* The Hidden Details */
+.flow-details {
+    background: #f8fafc;
+    margin-top: 5px;
+    padding: 15px;
+    border-radius: 0 0 12px 12px;
+    border: 1px solid #f1f5f9;
+    border-top: none;
+    font-size: 13px;
+    color: #475569;
+    margin-left: 10px;
+    border-left: 3px solid #3b82f6;
+    animation: fadeIn 0.3s ease;
+}
+
+/* Status Indicator Dot */
+.step-dot {
+    position: absolute;
+    left: -21px;
+    top: 20px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #cbd5e1;
+    border: 2px solid #fff;
+    box-shadow: 0 0 0 1px #e2e8f0;
+    z-index: 2;
+}
+
+details[open] .step-dot { background: #3b82f6; transform: scale(1.2); }
+details[open] .flow-summary { border-color: #3b82f6; background: #eff6ff; border-radius: 12px 12px 0 0; }
+/* --- NATIVE AUDIO PLAYER STYLES --- */
+.audio-controller {
+    background: #f8fafc;
+    border-radius: 12px;
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    border: 1px solid #e2e8f0;
+}
+
+.audio-btn {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.btn-play-audio {
+    background: #3b82f6;
+    color: white;
+}
+.btn-play-audio:hover { transform: scale(1.1); background: #2563eb; }
+
+.btn-pause-audio {
+    background: #fff;
+    color: #ef4444;
+    border: 1px solid #fee2e2;
+    display: none; /* Hidden by default */
+}
+.btn-pause-audio:hover { background: #fef2f2; }
+
+.audio-status {
+    flex-grow: 1;
+    font-size: 13px;
+    font-weight: 600;
+    color: #475569;
+    display: flex;
+    flex-direction: column;
+}
+
+.audio-bar-bg {
+    height: 4px;
+    background: #e2e8f0;
+    border-radius: 2px;
+    margin-top: 8px;
+    overflow: hidden;
+}
+
+.audio-bar-fill {
+    height: 100%;
+    width: 0%;
+    background: #3b82f6;
+    transition: width 0.5s linear;
+}
+
+/* EQ Animation for playing state */
+@keyframes eq-pulse {
+    0% { height: 3px; }
+    50% { height: 12px; }
+    100% { height: 3px; }
+}
+.eq-bars { display: flex; gap: 2px; align-items: flex-end; height: 15px; margin-left: 10px; opacity: 0; transition: opacity 0.3s; }
+.eq-bar { width: 3px; background: #3b82f6; border-radius: 2px; animation: eq-pulse 0.8s infinite ease-in-out; }
+.eq-bar:nth-child(2) { animation-delay: 0.1s; }
+.eq-bar:nth-child(3) { animation-delay: 0.2s; }
+.active-audio .eq-bars { opacity: 1; }
     </style>
 </head>
 <body>
@@ -1040,6 +1200,7 @@
     <div class="tabs">
         <button class="tab-btn active" onclick="switchTab('tracker')">Daily Tracker</button>
         <button class="tab-btn" onclick="switchTab('focus')">Focus Mode</button>
+        <button class="tab-btn" onclick="switchTab('yoga')">Yoga & Sadhana</button>
         <button class="tab-btn" onclick="switchTab('history')">History & Analytics</button>
         <button class="tab-btn" onclick="switchTab('routine')">Master Routine</button>
     </div>
@@ -1335,7 +1496,166 @@
             </div>
         </div>
     </div>
+<<div id="yogaView" style="display:none; animation: fadeIn 0.4s ease;">
+    
+    <div class="audio-card" style="flex-direction: column; align-items: stretch;">
+        <div style="display:flex; align-items:center; gap:15px; margin-bottom:15px;">
+            <div style="width: 50px; height: 50px; background: #eff6ff; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #3b82f6;">
+                <svg style="width:24px;height:24px;fill:currentColor" viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+            </div>
+            <div>
+                <div style="font-size: 10px; font-weight: 700; color: #64748b; letter-spacing: 1px; text-transform: uppercase;">Healing Frequency</div>
+                <div style="font-weight: 700; color: #1e293b; font-size: 14px;">Vishuddha (Thyroid) Chakra</div>
+            </div>
+        </div>
 
+        <div class="audio-controller" id="audioController">
+            <button class="audio-btn btn-play-audio" onclick="playAudio()">
+                <svg viewBox="0 0 24 24" style="width:24px;height:24px;fill:currentColor; margin-left:2px;"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+            
+            <button class="audio-btn btn-pause-audio" onclick="pauseAudio()">
+                <svg viewBox="0 0 24 24" style="width:24px;height:24px;fill:currentColor;"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+            </button>
+
+            <div class="audio-status">
+                <div style="display:flex; justify-content:space-between;">
+                    <span id="audioStatusText">Ready to Start</span>
+                    <div class="eq-bars">
+                        <div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div>
+                    </div>
+                </div>
+                <div class="audio-bar-bg">
+                    <div class="audio-bar-fill" id="audioProgress"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="hiddenPlayer" style="width: 1px; height: 1px; overflow: hidden; opacity: 0; pointer-events: none; position: absolute;"></div>
+    </div>
+
+    <div class="tracker-section" style="margin-top: 0;">
+        <div class="section-title" style="margin-bottom: 20px;">
+            <span>🧘‍♂️ The Sequence (40 Min)</span>
+        </div>
+
+        <div class="timeline-container">
+            <div style="font-size: 11px; font-weight: 800; color: #94a3b8; margin: 15px 0 10px 0; letter-spacing: 1px;">PHASE I: PHYSICAL & EYES (4 MIN)</div>
+
+            <details class="flow-step">
+                <summary class="flow-summary">
+                    <div class="step-dot"></div>
+                    <span style="font-weight: 600;">1. Neck Rolls</span>
+                    <span style="font-size: 11px; font-weight: 700; background: #e2e8f0; padding: 4px 8px; border-radius: 6px; color: #475569;">1 Min</span>
+                </summary>
+                <div class="flow-details">
+                    <strong>How:</strong> Sit cross-legged. Slowly roll neck clockwise (30s) then counter-clockwise (30s).<br>
+                    <strong>Benefit:</strong> Releases cervical tension and stimulates blood flow to the thyroid.
+                </div>
+            </details>
+
+            <details class="flow-step">
+                <summary class="flow-summary">
+                    <div class="step-dot"></div>
+                    <span style="font-weight: 600;">2. Eye Yoga (Trataka)</span>
+                    <span style="font-size: 11px; font-weight: 700; background: #e2e8f0; padding: 4px 8px; border-radius: 6px; color: #475569;">3 Mins</span>
+                </summary>
+                <div class="flow-details">
+                    <strong>Technique 1:</strong> Focus on a distant object, then shift gaze to nose tip. Repeat.<br>
+                    <strong>Technique 2 (Palming):</strong> Rub palms together until warm, gently cover closed eyes.<br>
+                    <strong>Benefit:</strong> Relieves dryness and digital eye strain.
+                </div>
+            </details>
+
+            <div style="font-size: 11px; font-weight: 800; color: #94a3b8; margin: 25px 0 10px 0; letter-spacing: 1px;">PHASE II: PRANAYAMA (9 MIN)</div>
+
+            <details class="flow-step">
+                <summary class="flow-summary">
+                    <div class="step-dot"></div>
+                    <span style="font-weight: 600;">3. Kapalbhati</span>
+                    <span style="font-size: 11px; font-weight: 700; background: #dcfce7; padding: 4px 8px; border-radius: 6px; color: #166534;">2 Mins</span>
+                </summary>
+                <div class="flow-details">
+                    <strong>Skull Shining Breath:</strong> Sit straight. Deep inhale. Forceful exhale pulling navel in. Passive inhale.<br>
+                    <strong>Benefit:</strong> Detoxifies body, balances energy, stimulates metabolism.
+                </div>
+            </details>
+
+            <details class="flow-step">
+                <summary class="flow-summary">
+                    <div class="step-dot"></div>
+                    <span style="font-weight: 600;">4. Nadi Shodhana</span>
+                    <span style="font-size: 11px; font-weight: 700; background: #dcfce7; padding: 4px 8px; border-radius: 6px; color: #166534;">2 Mins</span>
+                </summary>
+                <div class="flow-details">
+                    <strong>Alternate Nostril:</strong> Close right nostril with thumb, inhale left. Close left, exhale right. Inhale right, exhale left.<br>
+                    <strong>Benefit:</strong> Balances left/right brain hemispheres, lowers cortisol.
+                </div>
+            </details>
+
+            <details class="flow-step">
+                <summary class="flow-summary">
+                    <div class="step-dot"></div>
+                    <span style="font-weight: 600;">5. Ujjayi Pranayama</span>
+                    <span style="font-size: 11px; font-weight: 700; background: #dcfce7; padding: 4px 8px; border-radius: 6px; color: #166534;">3 Mins</span>
+                </summary>
+                <div class="flow-details">
+                    <strong>Ocean Breath:</strong> Constrict the back of throat slightly to create a whispering sound on inhale/exhale.<br>
+                    <strong>Benefit:</strong> The vibration directly massages the thyroid gland.
+                </div>
+            </details>
+
+            <details class="flow-step">
+                <summary class="flow-summary">
+                    <div class="step-dot"></div>
+                    <span style="font-weight: 600;">6. Bhramari (Bee Breath)</span>
+                    <span style="font-size: 11px; font-weight: 700; background: #dcfce7; padding: 4px 8px; border-radius: 6px; color: #166534;">2 Mins</span>
+                </summary>
+                <div class="flow-details">
+                    <strong>How:</strong> Close ears with thumbs. Inhale deep, exhale while making a humming bee sound.<br>
+                    <strong>Benefit:</strong> Soothes nervous system via vibration.
+                </div>
+            </details>
+
+            <div style="font-size: 11px; font-weight: 800; color: #94a3b8; margin: 25px 0 10px 0; letter-spacing: 1px;">PHASE III: DHYANA & MANTRA (26 MIN)</div>
+
+            <details class="flow-step">
+                <summary class="flow-summary">
+                    <div class="step-dot"></div>
+                    <span style="font-weight: 600;">7. Mantra Chanting</span>
+                    <span style="font-size: 11px; font-weight: 700; background: #ede9fe; padding: 4px 8px; border-radius: 6px; color: #5b21b6;">4 Mins</span>
+                </summary>
+                <div class="flow-details">
+                    <strong>Mantras:</strong> "Om Namah Shivaya" or "Gayatri Mantra".<br>
+                    <strong>Focus:</strong> Feel the resonance of "Om" starting in the belly and moving up to the throat.
+                </div>
+            </details>
+
+            <details class="flow-step">
+                <summary class="flow-summary">
+                    <div class="step-dot"></div>
+                    <span style="font-weight: 600;">8. Guided Visualization</span>
+                    <span style="font-size: 11px; font-weight: 700; background: #ede9fe; padding: 4px 8px; border-radius: 6px; color: #5b21b6;">6 Mins</span>
+                </summary>
+                <div class="flow-details">
+                    <strong>Technique:</strong> Close eyes. Visualize a bright <strong style="color:#3b82f6">BLUE LIGHT</strong> at the throat center.<br>
+                    <strong>Note:</strong> Let the audio guide you.
+                </div>
+            </details>
+
+            <details class="flow-step">
+                <summary class="flow-summary">
+                    <div class="step-dot"></div>
+                    <span style="font-weight: 600;">9. Deep Relaxation</span>
+                    <span style="font-size: 11px; font-weight: 700; background: #ede9fe; padding: 4px 8px; border-radius: 6px; color: #5b21b6;">16 Mins</span>
+                </summary>
+                <div class="flow-details">
+                    <strong>Savasana:</strong> Lie down flat. Let go of all tension.
+                </div>
+            </details>
+        </div>
+    </div>
+</div>
     <!-- UPDATED HISTORY TAB (v3.29) -->
     <div id="historyView">
         <div class="history-header">
@@ -2551,6 +2871,7 @@ function renderMiniHeatmap() {
         document.getElementById('historyView').style.display = 'none';
         document.getElementById('routineView').style.display = 'none';
         document.getElementById('focusView').style.display = 'none';
+        document.getElementById('yogaView').style.display = 'none';
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
         const target = document.getElementById(tabName + 'View');
         target.style.display = 'block';
@@ -3362,6 +3683,77 @@ function renderCorrelationMatrix() {
     html += '</tbody></table>';
     container.innerHTML = html;
 }
+</script>
+<script src="https://www.youtube.com/iframe_api"></script>
+<script>
+    // --- YOUTUBE AUDIO CONTROLLER ---
+    var ytPlayer;
+    var audioTimer;
+
+    // 1. Initialize API
+    function onYouTubeIframeAPIReady() {
+        ytPlayer = new YT.Player('hiddenPlayer', {
+            height: '1',
+            width: '1',
+            videoId: 'L_LSn_G6JUQ', // Your Video ID
+            playerVars: { 
+                'playsinline': 1, 
+                'controls': 0,
+                'disablekb': 1 
+            },
+            events: {
+                'onStateChange': onPlayerStateChange
+            }
+        });
+    }
+
+    // 2. Control Functions
+    function playAudio() {
+        if(ytPlayer && ytPlayer.playVideo) {
+            ytPlayer.playVideo();
+            document.querySelector('.btn-play-audio').style.display = 'none';
+            document.querySelector('.btn-pause-audio').style.display = 'flex';
+            document.getElementById('audioController').classList.add('active-audio');
+            document.getElementById('audioStatusText').innerText = "Playing Frequency...";
+        }
+    }
+
+    function pauseAudio() {
+        if(ytPlayer && ytPlayer.pauseVideo) {
+            ytPlayer.pauseVideo();
+            document.querySelector('.btn-play-audio').style.display = 'flex';
+            document.querySelector('.btn-pause-audio').style.display = 'none';
+            document.getElementById('audioController').classList.remove('active-audio');
+            document.getElementById('audioStatusText').innerText = "Paused";
+        }
+    }
+
+    // 3. Status Monitor (Progress Bar)
+    function onPlayerStateChange(event) {
+        if (event.data == YT.PlayerState.PLAYING) {
+            startAudioTimer();
+        } else {
+            stopAudioTimer();
+        }
+    }
+
+    function startAudioTimer() {
+        stopAudioTimer();
+        audioTimer = setInterval(() => {
+            if(ytPlayer && ytPlayer.getCurrentTime) {
+                const current = ytPlayer.getCurrentTime();
+                const duration = ytPlayer.getDuration();
+                if(duration > 0) {
+                    const pct = (current / duration) * 100;
+                    document.getElementById('audioProgress').style.width = pct + "%";
+                }
+            }
+        }, 1000);
+    }
+
+    function stopAudioTimer() {
+        clearInterval(audioTimer);
+    }
 </script>
 </body>
 </html>
